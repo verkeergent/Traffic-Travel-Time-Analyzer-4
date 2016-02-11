@@ -115,6 +115,16 @@ public class DbSet<T> {
         }
     }
 
+    public void delete(int key) {
+           try (org.sql2o.Connection con = sql2o.open()) {
+
+            Query q = con.createQuery("DELETE FROM " + getTableName() + " WHERE " + getPrimaryKey() + "=:" + getPrimaryKey())
+                    .addParameter(getPrimaryKey(), key);
+
+            q.executeUpdate();
+        }
+    }
+    
     protected String getPrimaryKey() {
         return "id";
     }

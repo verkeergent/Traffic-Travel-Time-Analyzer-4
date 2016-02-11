@@ -3,9 +3,6 @@ package be.ugent.verkeer4.verkeerdal.test;
 import be.ugent.verkeer4.verkeerdal.Repository;
 import be.ugent.verkeer4.verkeerdomain.data.Traject;
 import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -85,6 +82,17 @@ public class DbAccessTest extends TestCase {
 
         Traject storedTraject = repo.getTrajectSet().getItem(id);
         assertEquals("Naam is niet hetzelfde", t.getNaam(), storedTraject.getNaam());
+    }
+    
+    public void testDeleteTraject() {
+        List<Traject> trajecten = repo.getTrajectSet().getItems();
+        Traject lastTraject = trajecten.get(trajecten.size()-1);
+        repo.getTrajectSet().delete(lastTraject.getId());
+        
+        Traject storedTraject = repo.getTrajectSet().getItem(lastTraject.getId());
+        assertNull("Traject is niet verwijderd", storedTraject);
+        
+        
     }
 
 }
