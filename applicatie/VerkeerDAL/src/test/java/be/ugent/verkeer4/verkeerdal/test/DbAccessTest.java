@@ -25,11 +25,13 @@ public class DbAccessTest extends TestCase {
     }
 
     @Before
+    @Override
     public void setUp() throws ClassNotFoundException {
         repo = new Repository();
     }
 
     @After
+    @Override
     public void tearDown() {
     }
 
