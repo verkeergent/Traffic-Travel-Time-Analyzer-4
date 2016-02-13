@@ -9,37 +9,38 @@
         </jsp:include>
     </head>
     <body>
-        <h1>Traject Overzicht</h1>
+        <div class="container">
+            <h1>Traject Overzicht</h1>
 
-        <c:if test="${not empty trajecten}">
+            <c:if test="${not empty trajecten}">
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Naam</th>
-                        <th>Afstand</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="traject" items="${trajecten}">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>
-                                ${traject.id}
-                            </td>
-                            <td>
-                                <a href="detail.htm?id=${traject.id}">
-                                    ${traject.naam}
-                                </a>
-                            </td>
-                            <td>
-                                ${traject.afstand} m
-                            </td>
+                            <th>Id</th>
+                            <th>Naam</th>
+                            <th>Afstand</th>
                         </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
-
+                    </thead>
+                    <tbody>
+                        <c:forEach var="traject" items="${trajecten}">
+                            <tr>
+                                <td>
+                                    ${traject.id}
+                                </td>
+                                <td>
+                                    <a href="detail.htm?id=${traject.id}">
+                                        ${traject.naam}
+                                    </a>
+                                </td>
+                                <td>
+                                    ${traject.afstand} m
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+        </div>
     </body>
 </html>
