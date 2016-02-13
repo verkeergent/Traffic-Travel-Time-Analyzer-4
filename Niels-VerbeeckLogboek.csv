@@ -1,5 +1,5 @@
-Datum;Start;Einde;Plaats;Omschrijving;Issue #;Opmerkingen
-9/02/2016;8:15;10:15;School;Uitlegsessie VOP;;
-9/02/2016;10:15;12:30;School;Planning en eerste versie van Product Backlog;;
-9/02/2016;14:40;15:10;School;Beschikbare documentatie volledig doornemen;;
-;;;;;;
+Datum,Start,Einde,Plaats,Omschrijving,Issue #,Opmerkingen
+9/02/2016,8:15,10:15,School,Uitlegsessie VOP,,
+9/02/2016,10:15,12:30,School,Planning en eerste versie van Product Backlog,,
+9/02/2016,14:40,15:10,School,Beschikbare documentatie volledig doornemen,,
+11/02/2016,13:45,15:30,School,"Vergadering tijdens springuren tussen Niels, Tomas, Thomas en Aaron. Issues en bespreking verdere planning",,
