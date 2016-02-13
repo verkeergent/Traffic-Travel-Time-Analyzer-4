@@ -7,6 +7,6 @@ import retrofit2.http.*;
 public interface TomTomRoutingService {
     
   @GET("calculateRoute/{locations}/json/")
-  Call<CalculateRouteResponse> calculateRoute(@Path("locations") String locations, @Query("key") String apiKey, @Query("traffic") Boolean traffic);
+  Call<CalculateRouteResponse> calculateRoute(@Path("locations") String locations, @Query("key") String apiKey, @Query("traffic") boolean traffic);
 
 }

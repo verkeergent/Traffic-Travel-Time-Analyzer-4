@@ -19,7 +19,7 @@ public class TomTomClient {
         TomTomRoutingService service = retrofit.create(TomTomRoutingService.class);
         
         String locations = vanLat + "," + vanLng + ":" + totLat + "," + totLng;
-        CalculateRouteResponse response =  service.calculateRoute(locations, apiKey, Boolean.TRUE).execute().body();
+        CalculateRouteResponse response =  service.calculateRoute(locations, apiKey, true).execute().body();
         
         return response;
     }
