@@ -1,17 +1,19 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Traject Overzicht</title>
+        <jsp:include page="/WEB-INF/shared/head.jsp">
+            <jsp:param name="title" value="Traject overzicht" />
+        </jsp:include>
     </head>
     <body>
         <h1>Traject Overzicht</h1>
 
         <c:if test="${not empty trajecten}">
 
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -27,7 +29,7 @@
                             </td>
                             <td>
                                 <a href="detail.htm?id=${traject.id}">
-                                ${traject.naam}
+                                    ${traject.naam}
                                 </a>
                             </td>
                             <td>
@@ -38,6 +40,6 @@
                 </tbody>
             </table>
         </c:if>
-        
+
     </body>
 </html>

@@ -11,6 +11,11 @@
     <context:component-scan
         base-package="be.ugent.verkeer4.verkeerweb" />
 
+    <mvc:annotation-driven />
+        
+    <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
+    <mvc:default-servlet-handler/>
+    
     <bean
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
@@ -21,6 +26,6 @@
         </property>
     </bean>
 
-    <mvc:annotation-driven />
+
 
 </beans>

@@ -3,8 +3,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Traject</title>
+        <jsp:include page="/WEB-INF/shared/head.jsp">
+            <jsp:param name="title" value="Traject ${detail.naam}" />
+        </jsp:include>
     </head>
     <body>
         <h1>Traject ${detail.naam}</h1>
