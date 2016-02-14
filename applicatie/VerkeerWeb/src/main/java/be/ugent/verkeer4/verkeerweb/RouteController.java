@@ -1,5 +1,6 @@
 package be.ugent.verkeer4.verkeerweb;
 
+import be.ugent.verkeer4.verkeerdomain.IProviderService;
 import be.ugent.verkeer4.verkeerdomain.RouteService;
 import be.ugent.verkeer4.verkeerdomain.data.Route;
 import java.util.List;
@@ -9,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import be.ugent.verkeer4.verkeerdomain.IRouteService;
+import be.ugent.verkeer4.verkeerdomain.ProviderService;
+import be.ugent.verkeer4.verkeerdomain.data.RouteData;
+import be.ugent.verkeer4.verkeerweb.viewmodels.RouteDetails;
+import java.util.Date;
 
 @Controller
 public class RouteController {
@@ -28,13 +33,16 @@ public class RouteController {
     @RequestMapping(value = "/route/detail", method = RequestMethod.GET)
     public ModelAndView getDetail(int id) throws ClassNotFoundException {
 
-        
         IRouteService routeService = new RouteService();
-        // voor complexere objecten best view models aanmaken ipv rechtstreeks het domain object aan de view engine door te geven
-        Route t = routeService.getRoute(id);
+        IProviderService providerService = new ProviderService(routeService);
 
+        Route route = routeService.getRoute(id);
+
+        // TODO valid range
+        List<RouteData> data = providerService.getRouteDataForRoute(id, new Date(), new Date());
+        RouteDetails detail = new RouteDetails(route, data);
         ModelAndView model = new ModelAndView("route/detail");
-        model.addObject("detail", t);
+        model.addObject("detail", detail);
 
         return model;
     }

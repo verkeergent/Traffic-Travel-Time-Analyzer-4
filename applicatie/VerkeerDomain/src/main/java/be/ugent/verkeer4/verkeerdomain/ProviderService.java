@@ -13,9 +13,9 @@ public class ProviderService extends BaseService implements IProviderService {
     
     private final List<IProvider> providers;
     private final IRouteService routeService;
-    public ProviderService(IRouteService trajectService) throws ClassNotFoundException {
+    public ProviderService(IRouteService routeService) throws ClassNotFoundException {
         super();
-        this.routeService = trajectService;
+        this.routeService = routeService;
         
         this.providers = new ArrayList<>();
         providers.add(new TomTomProvider());
