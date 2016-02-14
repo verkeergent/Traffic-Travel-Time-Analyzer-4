@@ -15,3 +15,4 @@ Datum;Start;Einde;Plaats;Omschrijving;Issue #;Opmerkingen
 14/02/2016;8:30;10:30;Thuis;Perl script schrijven om trajecten uit pdf te parsen;25;
 14/02/2016;10:30;11:45;Thuis;Refactoren;19 en 6;
 14/02/2016;11:45;12:45;Thuis;Route data meer uitgefleshed;6;
+14/02/2016;13:00;13:30;Thuis;Route data ook aan web pagina toegevoegd en 15min zitten zoeken waarom de lijn niet getoond werd tot ik doorhad dat ik de lijn in de verkeerde db toegevoegd had;6;
