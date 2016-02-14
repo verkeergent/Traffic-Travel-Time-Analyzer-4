@@ -4,12 +4,12 @@
 <html>
     <head>
         <jsp:include page="/WEB-INF/shared/head.jsp">
-            <jsp:param name="title" value="Traject ${detail.naam}" />
+            <jsp:param name="title" value="Traject ${detail.name}" />
         </jsp:include>
     </head>
     <body>
         <div class="container">
-            <h1>Traject ${detail.naam}</h1>
+            <h1>Traject ${detail.name}</h1>
 
             <div class="row">
                 <div class="panel panel-default">
@@ -34,9 +34,9 @@
                             <c:when test="${not empty detail}">
                                 Id: ${detail.id}
                                 <br/>
-                                Naam: ${detail.naam}
+                                Naam: ${detail.name}
                                 <br/>
-                                Afstand ${detail.afstand} meter
+                                Afstand ${detail.distance} meter
                             </c:when>
                             <c:otherwise>
                                 Traject niet gevonden
