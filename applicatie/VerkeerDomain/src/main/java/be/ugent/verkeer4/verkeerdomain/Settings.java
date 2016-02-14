@@ -1,5 +1,8 @@
 package be.ugent.verkeer4.verkeerdomain;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+
 
 // TODO wat propere settings voorzien, eens onderzoeken hoe dit in java best moet
 public class Settings {
@@ -21,10 +24,14 @@ public class Settings {
     }
     
     public String getDatabaseUser() {
-        return "root";
+        Config conf = ConfigFactory.load();
+        String user = conf.getString("database.user");
+        return user;
     }
     
     public String getDatabasePassword() {
-        return "";
+        Config conf = ConfigFactory.load();
+        String pw = conf.getString("database.password");
+        return pw;
     }
 }
