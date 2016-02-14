@@ -7,14 +7,14 @@
         <title>Traject</title>
     </head>
     <body>
-        <h1>Traject ${detail.naam}</h1>
+        <h1>Traject ${detail.name}</h1>
         <c:choose>
             <c:when test="${not empty detail}">
                 Id: ${detail.id}
                 <br/>
-                Naam: ${detail.naam}
+                Naam: ${detail.name}
                 <br/>
-                Afstand ${detail.afstand} meter
+                Afstand ${detail.distance} meter
             </c:when>
             <c:otherwise>
                Traject niet gevonden

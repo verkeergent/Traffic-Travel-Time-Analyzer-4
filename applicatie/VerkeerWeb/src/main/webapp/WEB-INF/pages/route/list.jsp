@@ -9,7 +9,7 @@
     <body>
         <h1>Traject Overzicht</h1>
 
-        <c:if test="${not empty trajecten}">
+        <c:if test="${not empty routes}">
 
             <table>
                 <thead>
@@ -20,18 +20,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="traject" items="${trajecten}">
+                    <c:forEach var="route" items="${routes}">
                         <tr>
                             <td>
-                                ${traject.id}
+                                ${route.id}
                             </td>
                             <td>
-                                <a href="detail.htm?id=${traject.id}">
-                                ${traject.naam}
+                                <a href="detail.htm?id=${route.id}">
+                                ${route.name}
                                 </a>
                             </td>
                             <td>
-                                ${traject.afstand} m
+                                ${route.distance} m
                             </td>
                         </tr>
                     </c:forEach>

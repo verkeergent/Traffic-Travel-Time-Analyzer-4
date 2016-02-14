@@ -14,4 +14,17 @@ public class Settings {
     public String getTomTomRoutingAPIKey() {
         return "5j7n539vbsbf6frb7kwzxtc6";
     }
+    
+    
+    public  String getDatabaseConnectionString() {
+        return "//localhost:3306/verkeer";
+    }
+    
+    public String getDatabaseUser() {
+        return "root";
+    }
+    
+    public String getDatabasePassword() {
+        return "";
+    }
 }
