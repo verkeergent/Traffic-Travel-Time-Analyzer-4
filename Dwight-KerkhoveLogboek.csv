@@ -11,4 +11,6 @@ Datum;Start;Einde;Plaats;Omschrijving;Issue #;Opmerkingen
 13/02/2016;8:30;10:30;Thuis;Voorbeeld implementatie REST client met Retrofit en TomTom als provider;6 en 11;
 13/02/2016;17:30;18:30;Thuis;Bootstrap toegepast, static content serven, jsp includes;5;
 13/02/2016;19:00;20:00;Thuis;Onderzoeken hoe background services moet opgezet worden;14;
-13/02/2016;20:30:00;21:00;Thuis;Perl script schrijven om elke 5min data op te vragen en weg te schrijven in csv;;
+13/02/2016;20:30;21:00;Thuis;Perl script schrijven om elke 5min data op te vragen en weg te schrijven in csv;24;
+14/02/2016;8:30;10:30;Thuis;Perl script schrijven om trajecten uit pdf te parsen;25;
+14/02/2016;10:30;11:45;Thuis;Refactoren;19 en 6;
