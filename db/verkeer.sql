@@ -60,7 +60,7 @@ CREATE TABLE `routedata` (
   `Provider` int(11) NOT NULL,
   `TravelTime` int(11) NOT NULL COMMENT 'in seconds',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,6 +69,7 @@ CREATE TABLE `routedata` (
 
 LOCK TABLES `routedata` WRITE;
 /*!40000 ALTER TABLE `routedata` DISABLE KEYS */;
+INSERT INTO `routedata` VALUES (1,11,'2016-02-14 13:00:01',0,300);
 /*!40000 ALTER TABLE `routedata` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -81,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-14 12:23:18
+-- Dump completed on 2016-02-14 13:28:58

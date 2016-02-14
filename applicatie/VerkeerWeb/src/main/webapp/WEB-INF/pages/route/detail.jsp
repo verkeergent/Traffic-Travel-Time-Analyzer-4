@@ -42,6 +42,31 @@
                                 Traject niet gevonden
                             </c:otherwise>
                         </c:choose>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Timestamp</th>
+                                    <th>Tijd (seconden)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="data" items="${detail.data}">
+                                    <tr>
+                                        <td>
+                                            ${data.id}
+                                        </td>
+                                        <td>
+                                            ${data.timestamp}
+                                        </td>
+                                        <td>
+                                            ${data.travelTime}
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

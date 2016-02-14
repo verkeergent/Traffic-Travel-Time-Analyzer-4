@@ -39,7 +39,10 @@ public class RouteController {
         Route route = routeService.getRoute(id);
 
         // TODO valid range
-        List<RouteData> data = providerService.getRouteDataForRoute(id, new Date(), new Date());
+        Date d =  new Date();
+        d.setTime(new Date().getTime() - (24*60*60*1000));
+        
+        List<RouteData> data = providerService.getRouteDataForRoute(id,d, new Date());
         RouteDetails detail = new RouteDetails(route, data);
         ModelAndView model = new ModelAndView("route/detail");
         model.addObject("detail", detail);

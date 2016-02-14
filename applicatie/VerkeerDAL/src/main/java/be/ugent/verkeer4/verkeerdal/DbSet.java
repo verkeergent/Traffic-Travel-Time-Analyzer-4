@@ -71,9 +71,6 @@ public class DbSet<T> {
                 q.addParameter(parameter.getKey(), parameter.getValue());
             }
 
-            for (Entry<String, Object> parameter : parameters.entrySet()) {
-                q.addParameter(parameter.getKey(), parameter.getValue());
-            }
             List<T> lst = q.executeAndFetch(this.type);
 
             return lst;

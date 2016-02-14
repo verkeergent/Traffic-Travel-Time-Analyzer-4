@@ -12,6 +12,7 @@ public class UnitOfWork extends BaseRepository implements IUnitOfWork {
     @Override
     protected void initializeSets() {
         this.routes = new RouteDbSet(sql2o);
+        this.routeDatas = new RouteDataDbSet(sql2o);
     }
 
     @Override
