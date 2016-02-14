@@ -63,6 +63,23 @@ public class DbSet<T> {
         }
     }
 
+    public List<T> getItems(String condition, Map<String, Object> parameters) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            Query q = con.createQuery("SELECT * from " + getTableName() + " WHERE " + condition);
+
+            for (Entry<String, Object> parameter : parameters.entrySet()) {
+                q.addParameter(parameter.getKey(), parameter.getValue());
+            }
+
+            for (Entry<String, Object> parameter : parameters.entrySet()) {
+                q.addParameter(parameter.getKey(), parameter.getValue());
+            }
+            List<T> lst = q.executeAndFetch(this.type);
+
+            return lst;
+        }
+    }
+
     public T getItem(int key) {
         try (org.sql2o.Connection con = sql2o.open()) {
             Query q = con.createQuery("SELECT * from " + getTableName() + " WHERE " + getPrimaryKey() + "= :" + getPrimaryKey())
@@ -80,6 +97,7 @@ public class DbSet<T> {
             for (Entry<String, Object> parameter : parameters.entrySet()) {
                 q.addParameter(parameter.getKey(), parameter.getValue());
             }
+
             T obj = q.executeAndFetchFirst(this.type);
             return obj;
         }
@@ -116,7 +134,7 @@ public class DbSet<T> {
     }
 
     public void delete(int key) {
-           try (org.sql2o.Connection con = sql2o.open()) {
+        try (org.sql2o.Connection con = sql2o.open()) {
 
             Query q = con.createQuery("DELETE FROM " + getTableName() + " WHERE " + getPrimaryKey() + "=:" + getPrimaryKey())
                     .addParameter(getPrimaryKey(), key);
@@ -124,7 +142,7 @@ public class DbSet<T> {
             q.executeUpdate();
         }
     }
-    
+
     protected String getPrimaryKey() {
         return "id";
     }

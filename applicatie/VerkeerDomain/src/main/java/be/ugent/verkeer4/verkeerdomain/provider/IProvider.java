@@ -1,12 +1,14 @@
 package be.ugent.verkeer4.verkeerdomain.provider;
 
+import be.ugent.verkeer4.verkeerdomain.data.Route;
+import be.ugent.verkeer4.verkeerdomain.data.RouteData;
+
 
 public interface IProvider {
     
-    
     /***
      * 
-     * @return True als gelukt, anders False
+     * @param route
      */
-    boolean Poll();
+    public RouteData Poll(Route route);
 }

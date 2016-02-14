@@ -28,7 +28,7 @@ public class DbAccessTest extends TestCase {
     @Before
     @Override
     public void setUp() throws ClassNotFoundException {
-        repo = new UnitOfWork("//localhost:3306/verkeer", "root", "");
+        repo = new UnitOfWork("//localhost:3306/verkeertest", "root", "");
     }
 
     @After
@@ -47,7 +47,8 @@ public class DbAccessTest extends TestCase {
 
     public void testGetSingleTraject() {
         try {
-            Route traject = repo.getRouteSet().getItem(1);
+            Route firstRoute = repo.getRouteSet().getItems().get(0);
+            Route traject = repo.getRouteSet().getItem(firstRoute.getId());
             assertNotNull("Traject niet gevonden", traject);
         } catch (Exception e) {
             fail("Error: " + e.getMessage());
@@ -81,7 +82,7 @@ public class DbAccessTest extends TestCase {
 
     public void testUpdateRoute() {
 
-        Route t = repo.getRouteSet().getItem(1);
+        Route t = repo.getRouteSet().getItems().get(0);
         t.setId(0);
         int id = repo.getRouteSet().insert(t); // copy
         t.setId(id);
