@@ -4,3 +4,4 @@
 /applicatie/VerkeerDAL/target/
 /applicatie/VerkeerDomain/target/
 /applicatie/VerkeerDomain/nbproject/
+/applicatie/VerkeerDomain/src/main/resources/database-dev.conf
