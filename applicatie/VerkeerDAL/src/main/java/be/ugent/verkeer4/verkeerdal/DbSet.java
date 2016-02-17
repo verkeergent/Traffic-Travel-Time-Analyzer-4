@@ -28,7 +28,7 @@ public class DbSet<T> {
         StringBuilder values = new StringBuilder();
         for (Field field : this.type.getDeclaredFields()) {
             if (!field.getName().equalsIgnoreCase(getPrimaryKey())) {
-                names.append(field.getName())
+                names.append("`").append(field.getName()).append("`")
                         .append(",");
                 values.append(":")
                         .append(field.getName())
@@ -45,7 +45,7 @@ public class DbSet<T> {
         for (Field field : this.type.getDeclaredFields()) {
             if (!field.getName().equalsIgnoreCase(getPrimaryKey())) {
 
-                values.append(field.getName())
+                values.append("`").append(field.getName()).append("`")
                         .append("=")
                         .append(":").append(field.getName())
                         .append(",");
@@ -145,6 +145,6 @@ public class DbSet<T> {
     }
 
     protected String getTableName() {
-        return this.type.getSimpleName();
+        return this.type.getSimpleName().toLowerCase();
     }
 }

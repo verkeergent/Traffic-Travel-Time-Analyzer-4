@@ -16,6 +16,9 @@ public class Route {
     private double toLongitude;
     private String toAddress;
     
+    private double defaultTravelTime;
+    
+    
     /**
      * @return the id
      */
@@ -140,5 +143,19 @@ public class Route {
      */
     public void setToAddress(String toAddress) {
         this.toAddress = toAddress;
+    }
+
+    /**
+     * @return the defaultTravelTime
+     */
+    public double getDefaultTravelTime() {
+        return defaultTravelTime;
+    }
+
+    /**
+     * @param defaultTravelTime the defaultTravelTime to set
+     */
+    public void setDefaultTravelTime(double defaultTravelTime) {
+        this.defaultTravelTime = defaultTravelTime;
     }
 }

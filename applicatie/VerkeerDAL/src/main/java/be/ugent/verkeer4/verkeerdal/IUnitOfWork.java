@@ -2,7 +2,9 @@ package be.ugent.verkeer4.verkeerdal;
 
 public interface IUnitOfWork {
 
-    RouteDbSet getRouteSet();    
+    public RouteDbSet getRouteSet();    
     
-    RouteDataDbSet getRouteDataSet();    
+    public RouteDataDbSet getRouteDataSet();    
+    
+    public RouteWaypointDbSet getRouteWaypointSet();
 }

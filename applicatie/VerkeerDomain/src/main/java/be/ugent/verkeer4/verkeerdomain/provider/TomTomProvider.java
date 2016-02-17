@@ -17,11 +17,12 @@ public class TomTomProvider implements IProvider {
     public RouteData Poll(Route route) {
         try {
             // haal route gegevens op
-            CalculateRouteResponse response = TomTomClient.GetRoute(route.getFromLatitude(), route.getFromLongitude(), route.getToLatitude(), route.getToLongitude());
+            CalculateRouteResponse response = TomTomClient.GetRoute(route.getFromLatitude(), route.getFromLongitude(), route.getToLatitude(), route.getToLongitude(), true);
 
             if (response.getRoutes().size() > 0) {
                 be.ugent.verkeer4.verkeerdomain.provider.tomtom.Route tomtomRoute = response.getRoutes().get(0);
 
+                
                 RouteData rd = new RouteData();
                 rd.setProvider(ProviderEnum.TomTom);
                 rd.setTimestamp(new Date());

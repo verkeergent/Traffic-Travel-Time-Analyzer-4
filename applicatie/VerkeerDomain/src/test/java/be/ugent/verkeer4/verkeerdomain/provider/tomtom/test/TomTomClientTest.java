@@ -37,7 +37,7 @@ public class TomTomClientTest {
     public void testRoute() {
         CalculateRouteResponse response;
         try {
-            response = TomTomClient.GetRoute(51.038663, 3.725996, 51.056146, 3.695183);
+            response = TomTomClient.GetRoute(51.038663, 3.725996, 51.056146, 3.695183, true);
             
             if(response.getRoutes().size() > 0 ) {
                 
