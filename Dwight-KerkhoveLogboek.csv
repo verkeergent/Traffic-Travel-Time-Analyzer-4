@@ -17,3 +17,4 @@ Datum,Start,Einde,Plaats,Omschrijving,Issue #,Opmerkingen
 14/02/2016,11:45,12:45,Thuis,"Route data meer uitgefleshed",6,
 14/02/2016,13:00,13:30,Thuis,"Route data ook aan web pagina toegevoegd en 15min zitten zoeken waarom de lijn niet getoond werd tot ik doorhad dat ik de lijn in de verkeerde db toegevoegd had",6,
 16/02/2016,8:15,12:30,School,"Scrum meeting, issues overlopen en bespreken, toekennen taakverdeling",,
+17/02/2016,14:15,16:10,Thuis,"Gegevens in database proper zetten met testdata","30,31,32,33",
