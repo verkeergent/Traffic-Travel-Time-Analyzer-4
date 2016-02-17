@@ -41,4 +41,9 @@ public class RouteService extends BaseService implements IRouteService {
             Logger.getLogger(RouteService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    public List<RouteWaypoint> getRouteWaypoints() {
+        return repo.getRouteWaypointSet().getItems();
+    }
 }

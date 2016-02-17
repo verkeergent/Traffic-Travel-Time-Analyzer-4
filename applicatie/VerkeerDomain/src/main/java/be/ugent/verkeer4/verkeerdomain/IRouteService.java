@@ -13,6 +13,6 @@ public interface IRouteService {
     public void insertRouteWaypoint(RouteWaypoint wp);
 
     public void updateRoute(Route r);
-    
 
+    public List<RouteWaypoint> getRouteWaypoints();
 }

@@ -13,7 +13,7 @@
 
     <mvc:annotation-driven />
         
-    <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
+    <mvc:resources mapping="/static/**" location="/static/"/>
     
     <mvc:default-servlet-handler/>
     
