@@ -2,6 +2,7 @@ package be.ugent.verkeer4.verkeerdomain;
 
 import be.ugent.verkeer4.verkeerdomain.data.Route;
 import be.ugent.verkeer4.verkeerdomain.data.RouteData;
+import be.ugent.verkeer4.verkeerdomain.provider.HereMapsProvider;
 import be.ugent.verkeer4.verkeerdomain.provider.IProvider;
 import be.ugent.verkeer4.verkeerdomain.provider.TomTomProvider;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class ProviderService extends BaseService implements IProviderService {
         
         this.providers = new ArrayList<>();
         providers.add(new TomTomProvider());
+        providers.add(new HereMapsProvider());
     }
     
     @Override
