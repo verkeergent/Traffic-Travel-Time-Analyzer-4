@@ -7,3 +7,5 @@ Datum,Start,Einde,Plaats,Omschrijving,Issue #,Opmerkingen
 16/02/16,08:15,12:30,School,"Standup meeting, overlopen issues en issues toewijzen verschillende personen, presentatie klant bijwonen, klant bevragen",,
 16/02/16,14:30,15:30,School,"Installatie en configuratie mariaDB op laptop",,
 17/02/16,21:00,22:00,Thuis,"Aanvragen API-keys HereMaps; documentatie API HereMaps doornemen",8,
+18/02/16,11:00,12:00,School,"Documentatie API HereMaps doornemen + project in Netbeans openen",8,
+18/02/16,13:00,15:15,School,"HereMaps provider aangemaakt; json wordt ingeladen maar nog niet geparsed",8,
