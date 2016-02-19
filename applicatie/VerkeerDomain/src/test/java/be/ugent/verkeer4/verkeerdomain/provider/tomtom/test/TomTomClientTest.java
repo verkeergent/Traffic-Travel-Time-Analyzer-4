@@ -1,5 +1,7 @@
 package be.ugent.verkeer4.verkeerdomain.provider.tomtom.test;
 
+import be.ugent.verkeer4.verkeerdomain.data.RouteData;
+import be.ugent.verkeer4.verkeerdomain.provider.TomTomProvider;
 import be.ugent.verkeer4.verkeerdomain.provider.tomtom.CalculateRouteResponse;
 import be.ugent.verkeer4.verkeerdomain.provider.tomtom.Route;
 import be.ugent.verkeer4.verkeerdomain.provider.tomtom.TomTomClient;
@@ -62,5 +64,17 @@ public class TomTomClientTest {
             fail("Error: " + ex.getMessage());
         }
         
+    }
+    
+    @Test
+    public void testTomtomScrape() {
+        TomTomProvider provider = new TomTomProvider();
+        
+        be.ugent.verkeer4.verkeerdomain.data.Route r = new be.ugent.verkeer4.verkeerdomain.data.Route();
+        r.setFromLatitude(51.038663);
+        r.setFromLongitude(3.725996);
+        r.setToLatitude(51.056146);
+        r.setToLongitude(3.695183);
+        RouteData rd = provider.scrape(r);
     }
 }

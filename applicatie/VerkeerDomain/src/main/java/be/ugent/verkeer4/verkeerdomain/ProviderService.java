@@ -25,7 +25,7 @@ public class ProviderService extends BaseService implements IProviderService {
     public void poll() throws ClassNotFoundException {
         for (Route route : routeService.getRoutes()) {    
             for (IProvider provider : providers) {
-                RouteData data = provider.Poll(route);
+                RouteData data = provider.poll(route);
                 repo.getRouteDataSet().insert(data);
             }
         }

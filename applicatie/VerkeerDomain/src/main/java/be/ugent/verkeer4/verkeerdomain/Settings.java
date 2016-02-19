@@ -49,8 +49,16 @@ public class Settings {
 */
     }
 
+    public String getScrapePath() {
+        return "D:\\Dwight Documenten\\UGent\\2e jaar\\Vakoverschrijdend Eindproject\\Repo\\verkeer-4\\applicatie\\Scrapers"; // TIJDELIJK
+        //Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+        //return conf.getString("ScrapePath");
+    }
+    
     public boolean inProduction() {
         Config conf = ConfigFactory.load(SETTINGS_CONFIG);
         return conf.getBoolean("general.inProduction");
     }
+
+    
 }
