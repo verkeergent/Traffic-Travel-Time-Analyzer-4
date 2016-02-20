@@ -12,8 +12,8 @@
         <div class="container">
             <h1>Verkeer 4</h1>
             
-            <a href="route/list">Traject overzicht</a>
-            <a href="route/map">Traject map</a>
+            <a href="<c:url value="/route/list" />">Traject overzicht</a>
+            <a href="<c:url value="/route/map" />">Traject map</a>
         </div>
     </body>
 </html>

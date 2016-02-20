@@ -14,10 +14,10 @@ public class RouteService extends BaseService implements IRouteService {
     public RouteService() throws ClassNotFoundException {
         super();
     }
-    
+
     @Override
     public List<Route> getRoutes() throws ClassNotFoundException {
-        
+
         return repo.getRouteSet().getItems();
     }
 
@@ -47,11 +47,20 @@ public class RouteService extends BaseService implements IRouteService {
     public List<RouteWaypoint> getRouteWaypoints() {
         return repo.getRouteWaypointSet().getItems();
     }
-    
-    
-    
+
+    @Override
+    public List<RouteWaypoint> getRouteWaypointsForRoute(int routeId) {
+        return repo.getRouteWaypointSet().getWaypointsForRoute(routeId);
+    }
+
     @Override
     public List<RouteSummary> getMostRecentRouteSummaries() {
         return repo.getRouteDataSet().getMostRecentSummaries();
     }
+
+    @Override
+    public List<RouteSummary> getMostRecentRouteSummariesForRoute(int id) {
+        return repo.getRouteDataSet().getMostRecentSummaryForRoute(id);
+    }
+
 }

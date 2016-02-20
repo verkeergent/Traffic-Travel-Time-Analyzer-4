@@ -18,10 +18,12 @@ import be.ugent.verkeer4.verkeerweb.dataobjects.MapData;
 import be.ugent.verkeer4.verkeerweb.dataobjects.MapRoute;
 import be.ugent.verkeer4.verkeerweb.dataobjects.MapWaypoint;
 import be.ugent.verkeer4.verkeerweb.viewmodels.RouteDetails;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -33,11 +35,9 @@ public class RouteController {
         IRouteService routeService = new RouteService(); // eventueel dependency injection
         List<Route> lst = routeService.getRoutes();
 
-        
         List<RouteSummary> mostRecentRouteSummaries = routeService.getMostRecentRouteSummaries();
         // TODO maak van routes een map van route viewmodels en overloop alle summaries en lookup route in de map om de recente gegevens aan te vullen
-        
-        
+
         ModelAndView model = new ModelAndView("route/list");
         model.addObject("routes", lst);
 
@@ -57,8 +57,8 @@ public class RouteController {
         Date end = calendar.getTime();
         calendar.add(Calendar.DAY_OF_MONTH, -30);
         Date start = calendar.getTime();
-        
-        List<RouteData> data = providerService.getRouteDataForRoute(id, start,end);
+
+        List<RouteData> data = providerService.getRouteDataForRoute(id, start, end);
         RouteDetails detail = new RouteDetails(route, data);
         ModelAndView model = new ModelAndView("route/detail");
         model.addObject("detail", detail);
@@ -79,23 +79,88 @@ public class RouteController {
 
     @ResponseBody
     @RequestMapping(value = "route/mapdata", method = RequestMethod.GET)
-    public MapData ajaxGetMapRoutes() throws ClassNotFoundException {
+    public MapData ajaxGetMapRoutes(HttpServletRequest req) throws ClassNotFoundException {
+        if (req.getParameter("id") == null || req.getParameter("id").equalsIgnoreCase("")) {
+            return getAllRouteMapData();
+        } else {
+            int id = Integer.parseInt(req.getParameter("id"));
+            return getRouteMapData(id);
+        }
+    }
+
+    private MapData getRouteMapData(int id) throws ClassNotFoundException {
+        IRouteService routeService = new RouteService();
+        Route r = routeService.getRoute(id);
+
+        List<RouteWaypoint> waypoints = routeService.getRouteWaypointsForRoute(id);
+
+        MapData data = new MapData();
+        MapRoute mr = new MapRoute();
+        mr.setName(r.getName());
+        mr.setDistance(r.getDistance());
+        mr.setId(r.getId());
+
+        List<RouteSummary> summaries = routeService.getMostRecentRouteSummariesForRoute(id);
+        double trafficDelayPercentage = getTrafficDelayPercentage(r, summaries);
+        mr.setTrafficDelayPercentage(trafficDelayPercentage);
+        data.getRoutes().add(mr);
+
+        for (RouteWaypoint waypoint : waypoints) {
+            MapWaypoint wp = new MapWaypoint(waypoint.getLatitude(), waypoint.getLongitude());
+            mr.getWaypoints().add(wp);
+        }
+
+        return data;
+    }
+
+    private double getTrafficDelayPercentage(Route r, List<RouteSummary> summaries) {
+        // TODO move to route service?
+        if (summaries.size() <= 0) {
+            return 0;
+        }
+
+        int totalTravelTime = summaries.stream().mapToInt(RouteSummary::getTravelTime).sum();
+        double avg = totalTravelTime / summaries.size();
+
+        double percentage = (avg / r.getDefaultTravelTime()) - 1;
+        return percentage;
+    }
+
+    private MapData getAllRouteMapData() throws ClassNotFoundException {
         IRouteService routeService = new RouteService();
         List<Route> routes = routeService.getRoutes();
 
         List<RouteWaypoint> waypoints = routeService.getRouteWaypoints();
 
         MapData data = new MapData();
-
         Map<Integer, MapRoute> mapRoutesPerId = new HashMap<>();
+        Map<Integer, List<RouteSummary>> summariesPerRouteId = new HashMap<>();
+
+        for (RouteSummary summary : routeService.getMostRecentRouteSummaries()) {
+            List<RouteSummary> lst;
+            if (!summariesPerRouteId.containsKey(summary.getRouteId())) {
+                summariesPerRouteId.put(summary.getRouteId(), lst = new ArrayList<>());
+            } else {
+                lst = summariesPerRouteId.get(summary.getRouteId());
+            }
+
+            lst.add(summary);
+        }
+
         for (Route r : routes) {
             MapRoute mr = new MapRoute();
             mr.setName(r.getName());
             mr.setDistance(r.getDistance());
             mr.setId(r.getId());
 
-            // TODO bepaal adhv laatste gegevens
-            mr.setTrafficDelayPercentage(Math.random());
+            List<RouteSummary> routeSummaries;
+            if (!summariesPerRouteId.containsKey(r.getId()))
+                routeSummaries = new ArrayList<>();
+            else
+                routeSummaries = summariesPerRouteId.get(r.getId());
+           
+            double traficDelayPercentage = getTrafficDelayPercentage(r, routeSummaries);
+            mr.setTrafficDelayPercentage(traficDelayPercentage);
 
             mapRoutesPerId.put(r.getId(), mr);
             data.getRoutes().add(mr);

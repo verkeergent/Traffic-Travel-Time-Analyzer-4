@@ -49,7 +49,7 @@
         
         <script>
             $(document).ready(function() {
-                MapManagement.intializeMap("map", "<c:url value="/route/mapdata" />");
+                MapManagement.intializeRouteMap("map", "<c:url value="/route/mapdata" />");
             });
         </script>
     </body>
