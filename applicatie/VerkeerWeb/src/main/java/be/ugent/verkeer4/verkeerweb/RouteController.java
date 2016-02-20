@@ -118,7 +118,7 @@ public class RouteController {
             fromLat = Double.parseDouble(route.getFromLatLng().split(",")[0]);
             fromLng = Double.parseDouble(route.getFromLatLng().split(",")[1]);
         } catch (Exception ex) {
-            result.rejectValue("fromLatLng", "error.fromLatLng", "Ongeldig van positie");
+            result.rejectValue("fromLatLng", "error.fromLatLng", "Ongeldige van positie");
         }
 
         double toLat = 0;
@@ -127,7 +127,7 @@ public class RouteController {
             toLat = Double.parseDouble(route.getToLatLng().split(",")[0]);
             toLng = Double.parseDouble(route.getToLatLng().split(",")[1]);
         } catch (Exception ex) {
-            result.rejectValue("toLatLng", "error.toLatLng", "Ongeldig naar positie");
+            result.rejectValue("toLatLng", "error.toLatLng", "Ongeldige naar positie");
         }
 
         if (result.hasErrors()) {
@@ -140,6 +140,9 @@ public class RouteController {
             Route r = routeService.getRoute(route.getId());
             
             r.setName(route.getName());
+            
+            boolean updateWaypoints = r.getFromLatitude() != fromLat || r.getFromLongitude() !=  fromLng || r.getToLatitude() != toLat || r.getToLongitude() != toLng;
+            
             r.setFromAddress(route.getFromAddress());
             r.setToAddress(route.getToAddress());
             r.setFromLatitude(fromLat);
@@ -148,11 +151,11 @@ public class RouteController {
             r.setToLatitude(toLat);
             r.setToLongitude(toLng);
             
-            routeService.updateRoute(r, true);
+            routeService.updateRoute(r, updateWaypoints);
             
             
             return new ModelAndView(
-                    "redirect:/route/list");
+                    "redirect:/route/detail?id=" + id);
         }
     }
 
