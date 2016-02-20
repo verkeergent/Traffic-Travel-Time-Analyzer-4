@@ -155,7 +155,7 @@ public class RouteController {
             
             
             return new ModelAndView(
-                    "redirect:/route/detail?id=" + id);
+                    "redirect:/route/detail?id=" + r.getId());
         }
     }
 
