@@ -18,6 +18,7 @@ import be.ugent.verkeer4.verkeerweb.dataobjects.MapData;
 import be.ugent.verkeer4.verkeerweb.dataobjects.MapRoute;
 import be.ugent.verkeer4.verkeerweb.dataobjects.MapWaypoint;
 import be.ugent.verkeer4.verkeerweb.viewmodels.RouteDetails;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,10 +53,12 @@ public class RouteController {
         Route route = routeService.getRoute(id);
 
         // TODO valid range
-        Date d = new Date();
-        d.setTime(new Date().getTime() - (24 * 60 * 60 * 1000));
-
-        List<RouteData> data = providerService.getRouteDataForRoute(id, d, new Date());
+        Calendar calendar = Calendar.getInstance();
+        Date end = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, -30);
+        Date start = calendar.getTime();
+        
+        List<RouteData> data = providerService.getRouteDataForRoute(id, start,end);
         RouteDetails detail = new RouteDetails(route, data);
         ModelAndView model = new ModelAndView("route/detail");
         model.addObject("detail", detail);

@@ -48,6 +48,9 @@ public class RouteService extends BaseService implements IRouteService {
         return repo.getRouteWaypointSet().getItems();
     }
     
+    
+    
+    @Override
     public List<RouteSummary> getMostRecentRouteSummaries() {
         return repo.getRouteDataSet().getMostRecentSummaries();
     }
