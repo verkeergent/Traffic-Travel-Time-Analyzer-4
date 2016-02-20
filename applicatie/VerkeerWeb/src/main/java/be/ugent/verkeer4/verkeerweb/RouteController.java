@@ -93,6 +93,10 @@ public class RouteController {
         Route r = routeService.getRoute(id);
         RouteEdit re = new RouteEdit();
         re.setName(r.getName());
+        re.setFromAddress(r.getFromAddress());
+        re.setToAddress(r.getToAddress());
+        re.setFromLatLng(r.getFromLatitude() + "," + r.getFromLongitude());
+        re.setToLatLng(r.getToLatitude() + "," + r.getToLongitude());
 
         ModelAndView model = new ModelAndView("route/edit");
         model.addObject("routeEdit", re);
@@ -104,15 +108,49 @@ public class RouteController {
     public ModelAndView edit(@Valid @ModelAttribute("routeEdit") RouteEdit route, BindingResult result) throws ClassNotFoundException {
 
         // validation, moet manueel aangezien geen hibernate-validators toegevoegd is
-        if(route.getName() == null || route.getName().isEmpty())
+        if (route.getName() == null || route.getName().isEmpty()) {
             result.rejectValue("name", "error.name", "Naam is verplicht");
-        
-        
+        }
+
+        double fromLat = 0;
+        double fromLng = 0;
+        try {
+            fromLat = Double.parseDouble(route.getFromLatLng().split(",")[0]);
+            fromLng = Double.parseDouble(route.getFromLatLng().split(",")[1]);
+        } catch (Exception ex) {
+            result.rejectValue("fromLatLng", "error.fromLatLng", "Ongeldig van positie");
+        }
+
+        double toLat = 0;
+        double toLng =0;
+        try {
+            toLat = Double.parseDouble(route.getToLatLng().split(",")[0]);
+            toLng = Double.parseDouble(route.getToLatLng().split(",")[1]);
+        } catch (Exception ex) {
+            result.rejectValue("toLatLng", "error.toLatLng", "Ongeldig naar positie");
+        }
+
         if (result.hasErrors()) {
             ModelAndView model = new ModelAndView("route/edit", result.getModel());
             model.addObject("errors", result);
             return model;
         } else {
+
+            IRouteService routeService = new RouteService();
+            Route r = routeService.getRoute(route.getId());
+            
+            r.setName(route.getName());
+            r.setFromAddress(route.getFromAddress());
+            r.setToAddress(route.getToAddress());
+            r.setFromLatitude(fromLat);
+            r.setFromLongitude(fromLng);
+            
+            r.setToLatitude(toLat);
+            r.setToLongitude(toLng);
+            
+            routeService.updateRoute(r, true);
+            
+            
             return new ModelAndView(
                     "redirect:/route/list");
         }
