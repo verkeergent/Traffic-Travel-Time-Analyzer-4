@@ -2,6 +2,7 @@ package be.ugent.verkeer4.verkeerdomain;
 
 import be.ugent.verkeer4.verkeerdomain.data.Route;
 import be.ugent.verkeer4.verkeerdomain.data.RouteWaypoint;
+import be.ugent.verkeer4.verkeerdomain.data.composite.RouteSummary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,5 +46,9 @@ public class RouteService extends BaseService implements IRouteService {
     @Override
     public List<RouteWaypoint> getRouteWaypoints() {
         return repo.getRouteWaypointSet().getItems();
+    }
+    
+    public List<RouteSummary> getMostRecentRouteSummaries() {
+        return repo.getRouteDataSet().getMostRecentSummaries();
     }
 }

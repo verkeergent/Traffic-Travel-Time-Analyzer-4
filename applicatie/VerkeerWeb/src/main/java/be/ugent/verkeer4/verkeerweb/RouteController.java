@@ -13,6 +13,7 @@ import be.ugent.verkeer4.verkeerdomain.IRouteService;
 import be.ugent.verkeer4.verkeerdomain.ProviderService;
 import be.ugent.verkeer4.verkeerdomain.data.RouteData;
 import be.ugent.verkeer4.verkeerdomain.data.RouteWaypoint;
+import be.ugent.verkeer4.verkeerdomain.data.composite.RouteSummary;
 import be.ugent.verkeer4.verkeerweb.dataobjects.MapData;
 import be.ugent.verkeer4.verkeerweb.dataobjects.MapRoute;
 import be.ugent.verkeer4.verkeerweb.dataobjects.MapWaypoint;
@@ -20,7 +21,6 @@ import be.ugent.verkeer4.verkeerweb.viewmodels.RouteDetails;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -32,6 +32,11 @@ public class RouteController {
         IRouteService routeService = new RouteService(); // eventueel dependency injection
         List<Route> lst = routeService.getRoutes();
 
+        
+        List<RouteSummary> mostRecentRouteSummaries = routeService.getMostRecentRouteSummaries();
+        // TODO maak van routes een map van route viewmodels en overloop alle summaries en lookup route in de map om de recente gegevens aan te vullen
+        
+        
         ModelAndView model = new ModelAndView("route/list");
         model.addObject("routes", lst);
 

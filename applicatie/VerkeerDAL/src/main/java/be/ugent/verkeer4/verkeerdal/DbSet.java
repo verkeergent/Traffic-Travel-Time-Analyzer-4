@@ -9,7 +9,7 @@ import org.sql2o.Sql2o;
 
 public class DbSet<T> {
 
-    private final Sql2o sql2o;
+    protected final Sql2o sql2o;
     private final Class<T> type;
 
     private final String insertQuery;
