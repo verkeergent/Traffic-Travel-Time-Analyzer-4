@@ -24,35 +24,28 @@ public class Settings {
     }
 
     public String getDatabaseConnectionString() {
-        return "//localhost:3306/verkeer"; // TIJDELIJK
-        /*
         String configName = inProduction() ? DB_PROD_CONFIG : DB_DEV_CONFIG;
         Config conf = ConfigFactory.load(configName);
-        return conf.getString("database.connection");*/
+        return conf.getString("database.connection");
     }
 
     public String getDatabaseUser() {
-        return "root"; // TIJDELIJK
-        /*
         String configName = inProduction() ? DB_PROD_CONFIG : DB_DEV_CONFIG;
         Config conf = ConfigFactory.load(configName);
-        return conf.getString("database.user");*/
+        return conf.getString("database.user");
         
     }
 
     public String getDatabasePassword() {
-        return ""; // TIJDELIJK
-        /*
         String configName = inProduction() ? DB_PROD_CONFIG : DB_DEV_CONFIG;
         Config conf = ConfigFactory.load(configName);
         return conf.getString("database.password");
-*/
+
     }
 
     public String getScrapePath() {
-        return "D:\\Dwight Documenten\\UGent\\2e jaar\\Vakoverschrijdend Eindproject\\Repo\\verkeer-4\\applicatie\\Scrapers"; // TIJDELIJK
-        //Config conf = ConfigFactory.load(SETTINGS_CONFIG);
-        //return conf.getString("ScrapePath");
+        Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+       return conf.getString("ScrapePath");
     }
     
     public boolean inProduction() {
