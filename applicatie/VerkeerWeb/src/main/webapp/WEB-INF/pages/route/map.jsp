@@ -14,42 +14,67 @@
         <div class="container">
             <h1>Traject map</h1>
 
-            <div class="map" id="map" style="height:500px">
 
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="map" id="map" style="height:800px">
+
+                    </div>        
+                </div>   
+                <div class="col-md-4">
+                    <c:if test="${not empty routes}">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><input name="routecheckAll" type="checkbox" class="routecheckAll" checked="checked"></input>Naam</th>
+                                    <th>Afstand</th>
+                                    <th>Vertraging</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="route" items="${routes}">
+                                    <tr data-id="${route.id}">
+
+                                        <td>
+                                            <input name="check${route.id}" type="checkbox" class="routecheck" checked="checked" data-id="${route.id}"/>
+
+                                            <a class="routename" href="#" data-id="${route.id}">${route.name}</a>
+                                        </td>
+                                        <td>
+                                            ${route.distance} m
+                                        </td>
+                                        <td>
+                                            ${route.distance} m
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                </div>
             </div>
-
-            <c:if test="${not empty routes}">
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Naam</th>
-                            <th>Afstand</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="route" items="${routes}">
-                            <tr data-id="${route.id}">
-
-                                <td>
-                                    <input name="check${route.id}" type="checkbox" class="routecheck" data-id="${route.id}"/>
-                                    <label for="check${route.id}">
-                                        ${route.name}
-                                    </label> 
-                                </td>
-                                <td>
-                                    ${route.distance} m
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
         </div>
-        
+
         <script>
-            $(document).ready(function() {
-                MapManagement.intializeRouteMap("map", "<c:url value="/route/mapdata" />");
+            $(document).ready(function () {
+                var map = MapManagement.intializeRouteMap("map", "<c:url value="/route/mapdata" />");
+
+                $(document).on("change", ".routecheck", function () {
+                    var id = parseInt($(this).attr("data-id"));
+                    map.setRouteVisibility(id, $(this).prop("checked"));
+                });
+
+                $(document).on("click", ".routename", function () {
+                    var id = parseInt($(this).attr("data-id"));
+                    map.centerMapOnRoute(id);
+                });
+
+                $(document).on("change", ".routecheckAll", function () {
+                    $(".routecheck").prop("checked", $(this).prop("checked"));
+                    $(".routecheck").change();
+                });
             });
         </script>
     </body>

@@ -62,7 +62,8 @@ namespace MapManagement {
             else {
                 // already exists, update layer
                 llmr = this.leafletMapRouteById[r.id];
-                // TODO change color somehow
+                llmr.layer.setStyle({ fillColor: MapManager.getColorFromTrafficDelayPercentage(r.trafficDelayPercentage) });
+                llmr.layer.redraw();
             }
         }
 
@@ -74,15 +75,19 @@ namespace MapManagement {
                 }
             }
             let bounds = new L.LatLngBounds(allPoints);
-            this.map.fitBounds(bounds, { 
-                animate:false,
-                zoom: {
-                    animate:false
-                },
-                pan: {
-                    animate:false
-                }
+            this.map.fitBounds(bounds, {
+                animate: false,
+                zoom: { animate: false },
+                pan: { animate: false }
             });
+        }
+
+        centerMapOnRoute(id: number) {
+            let llmr = (<LeafletMapRoute>this.leafletMapRouteById[id]);
+            if (llmr) {
+                let bounds = new L.LatLngBounds(llmr.points);
+                this.map.fitBounds(bounds, {});
+            }
         }
 
 
@@ -112,6 +117,17 @@ namespace MapManagement {
             }
             return latlngs;
         }
+
+        setRouteVisibility(id: number, visible: boolean) {
+            let path = (<LeafletMapRoute>this.leafletMapRouteById[id]).layer;
+            // great Open source (TM): https://github.com/Leaflet/Leaflet/issues/2662
+            let element = <HTMLElement>(<any>path)._path;
+            if (visible)
+                $(element).show();
+            else
+                $(element).hide();
+
+        }
     }
 
     class RemoteRouteManager extends MapManager {
@@ -138,8 +154,9 @@ namespace MapManagement {
         }
     }
 
-    export function intializeRouteMap(elementId: string, ajaxUrl: string) {
+    export function intializeRouteMap(elementId: string, ajaxUrl: string): MapManager {
         let mgr = new RemoteRouteManager(elementId, ajaxUrl);
         mgr.updateRoutes();
+        return mgr;
     }
 }

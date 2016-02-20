@@ -39,6 +39,8 @@ var MapManagement;
             else {
                 // already exists, update layer
                 llmr = this.leafletMapRouteById[r.id];
+                llmr.layer.setStyle({ fillColor: MapManager.getColorFromTrafficDelayPercentage(r.trafficDelayPercentage) });
+                llmr.layer.redraw();
             }
         };
         MapManager.prototype.centerMap = function () {
@@ -52,13 +54,16 @@ var MapManagement;
             var bounds = new L.LatLngBounds(allPoints);
             this.map.fitBounds(bounds, {
                 animate: false,
-                zoom: {
-                    animate: false
-                },
-                pan: {
-                    animate: false
-                }
+                zoom: { animate: false },
+                pan: { animate: false }
             });
+        };
+        MapManager.prototype.centerMapOnRoute = function (id) {
+            var llmr = this.leafletMapRouteById[id];
+            if (llmr) {
+                var bounds = new L.LatLngBounds(llmr.points);
+                this.map.fitBounds(bounds, {});
+            }
         };
         MapManager.prototype.initializePathPopup = function (path, route) {
             path.bindPopup(route.name + " (" + route.distance + "m)", {});
@@ -83,6 +88,15 @@ var MapManagement;
                 latlngs.push(L.latLng(wp.latitude, wp.longitude));
             }
             return latlngs;
+        };
+        MapManager.prototype.setRouteVisibility = function (id, visible) {
+            var path = this.leafletMapRouteById[id].layer;
+            // great Open source (TM): https://github.com/Leaflet/Leaflet/issues/2662
+            var element = path._path;
+            if (visible)
+                $(element).show();
+            else
+                $(element).hide();
         };
         return MapManager;
     })();
@@ -114,6 +128,7 @@ var MapManagement;
     function intializeRouteMap(elementId, ajaxUrl) {
         var mgr = new RemoteRouteManager(elementId, ajaxUrl);
         mgr.updateRoutes();
+        return mgr;
     }
     MapManagement.intializeRouteMap = intializeRouteMap;
 })(MapManagement || (MapManagement = {}));
