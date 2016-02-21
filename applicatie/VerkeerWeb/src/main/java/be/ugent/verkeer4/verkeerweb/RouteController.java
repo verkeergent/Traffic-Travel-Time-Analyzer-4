@@ -56,6 +56,18 @@ public class RouteController {
             summaryPerProvider.put(sum.getProvider(), sum);
         }
 
+        for (Route r : lst) {
+            RouteSummaryEntry entry =  entries.get(r.getId());
+            Map<ProviderEnum, RouteSummary> summaryPerProvider =entry.getRecentSummaries();
+            
+            double delayPercentage = getTrafficDelayPercentage(r, summaryPerProvider.values().stream().toArray(RouteSummary[]::new));
+            double currentTravelTime = r.getDefaultTravelTime() * (1 + delayPercentage);
+            double delay = currentTravelTime - r.getDefaultTravelTime();
+            
+            entry.setDelay(delay);
+            entry.setAverageCurrentTravelTime(currentTravelTime);
+        }
+
         ModelAndView model = new ModelAndView("route/list");
 
         model.addObject("overview", overview);

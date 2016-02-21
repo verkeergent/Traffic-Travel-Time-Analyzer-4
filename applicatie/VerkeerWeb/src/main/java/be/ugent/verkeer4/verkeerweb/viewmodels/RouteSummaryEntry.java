@@ -60,7 +60,10 @@ public class RouteSummaryEntry {
         if (!recentSummaries.containsKey(prov)) {
             return 0;
         } else {
-            return recentSummaries.get(prov).getTravelTime() - this.route.getDefaultTravelTime();
+            double delay = recentSummaries.get(prov).getTravelTime() - this.route.getDefaultTravelTime();
+            if(delay < 0)
+                delay = 0;
+            return delay;
         }
     }
 
