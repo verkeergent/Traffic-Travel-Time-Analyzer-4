@@ -32,3 +32,4 @@ Datum,Start,Einde,Plaats,Omschrijving,Issue #,Opmerkingen
 20/02/16,14:30,16:00,Thuis,"Route editeren verder uitgewerkt met google maps integratie",38,
 21/02/16,16:30,17:50,Thuis,"Traject overzicht verder gekoppeld aan domain en afgewerkt",16,
 21/02/16,18:30,19:20,Thuis,"Here maps scraper in Perl geschreven (zonder API key)",8,
+21/02/16,19:40,20:20,Thuis,"Waze scraper in Perl geschreven (zonder API key)",9,
