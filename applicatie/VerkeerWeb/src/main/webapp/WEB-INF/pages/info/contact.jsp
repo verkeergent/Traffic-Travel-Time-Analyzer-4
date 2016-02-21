@@ -5,11 +5,10 @@
 <html>
     <head>
         <jsp:include page="/WEB-INF/shared/head.jsp">
-            <jsp:param name="title" value="Traject overzicht" />
+            <jsp:param name="title" value="Contact" />
         </jsp:include>
     </head>
     <body>
-        <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -20,14 +19,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../VerkeerWeb">Home</a>
+                    <a class="navbar-brand" href="../">Home</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="route/list">Traject Overzicht <span class="sr-only">(current)</span></a></li>
-                        <li><a href="route/map">Traject Map</a></li>
+                        <li><a href="../route/list">Traject Overzicht <span class="sr-only">(current)</span></a></li>
+                        <li><a href="../route/map">Traject Map</a></li>
                     </ul>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
@@ -39,11 +38,11 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown active dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Info <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="info/providers">Providers</a></li>
-                                <li><a href="info/tos">TOS</a></li>
-                                <li><a href="info/about">About</a></li>
+                                <li><a href="providers">Providers</a></li>
+                                <li><a href="tos">TOS</a></li>
+                                <li><a href="about">About</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="info/contact">Contact</a></li>
+                                <li><a href="contact">Contact</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -51,10 +50,18 @@
             </div><!-- /.container-fluid -->
         </nav>
         <div class="container">
-            <h1>Verkeer 4</h1>
+            <h1>Contact</h1>
+
+            <h2>Teammembers:</h2>
+            <ul>
+                <li>Tomas Bolckmans</li>
+                <li>Thomas Clauwaert</li>
+                <li>Dwight Kerkhove</li>
+                <li>Aaron Mousavi</li>
+                <li>Niels Verbeeck</li>
+                <li>Jaron Vervynckt</li>
+            </ul>
             
-            <a href="<c:url value="/route/list" />">Traject overzicht</a> <hr/>
-            <a href="<c:url value="/route/map" />">Traject map</a>
         </div>
     </body>
 </html>
