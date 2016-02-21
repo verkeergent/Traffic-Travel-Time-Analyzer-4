@@ -30,3 +30,5 @@ Datum,Start,Einde,Plaats,Omschrijving,Issue #,Opmerkingen
 20/02/16,10:00,10:55,Thuis,"Filtering per traject & focus bij aanklikken in map overzicht",36,
 20/02/16,13:00,14:30,Thuis,"Form validation in spring onderzocht en toegepast",38,
 20/02/16,14:30,16:00,Thuis,"Route editeren verder uitgewerkt met google maps integratie",38,
+21/02/16,16:30,17:50,Thuis,"Traject overzicht verder gekoppeld aan domain en afgewerkt",16,
+21/02/16,18:30,19:20,Thuis,"Here maps scraper in Perl geschreven (zonder API key)",8,
