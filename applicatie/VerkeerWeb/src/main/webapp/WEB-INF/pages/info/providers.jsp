@@ -50,9 +50,9 @@
             </div><!-- /.container-fluid -->
         </nav>
         <div class="container">
-            <h1>Contact</h1>
 
-            <h2>Providers:</h2>
+
+            <h1>Providers:</h1>
             <ul>
                 <li>Google maps</li>
                 <li>Waze</li>
