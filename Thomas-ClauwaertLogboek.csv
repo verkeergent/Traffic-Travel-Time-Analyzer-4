@@ -11,3 +11,4 @@ Datum,Start,Einde,Plaats,Omschrijving,Issue #,Opmerkingen
 18/02/16,22:30,23:00,Thuis,"Opzetten van DO-server voor continue metingen",,
 21/02/16,11:00,12:00,Thuis,"Problemen met nieuwe projectstructuur gefixt + functie in mariadb zorgde voor problemen",,
 21/02/16,12:30,14:30,Thuis,"Bootstrap toegevoegd + info pages + voorbeeldtabel",#16 en #17,
+21/02/16,18:00,18:30,Thuis,"Frontend fixes",,
