@@ -13,9 +13,7 @@
         <jsp:include page="/WEB-INF/shared/navigation.jsp" />
         <div class="container">
             <h1>Traject Overzicht</h1>
-
-
-
+            
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item active">
                     <a class="nav-link active" data-toggle="tab" href="#summary" role="tab">Samenvatting</a>
@@ -64,8 +62,7 @@
                                     </td>
                                     <td>
                                         <a href="<c:url value="/route/edit/${routeSummaryEntry.route.id}"/>"><span class="btn icon-pencil">Wijzig</span></a>
-                                    </td>
-                                    
+                                    </td>                                    
                                 </tr>
                             </c:forEach>
                         </tbody>
