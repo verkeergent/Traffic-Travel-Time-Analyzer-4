@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="be.ugent.verkeer4.verkeerdomain.data.ProviderEnum" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,182 +14,182 @@
         <div class="container">
             <h1>Traject Overzicht</h1>
 
-            <c:if test="${not empty routes}">
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><center>Id</center></th>
-                    <th><center>Naam</center></th>
-                    <th><center>Afstand</center></th>
-                    <th><center>Provider</center></th> <!--temp-->
-                    <th><center>Normale Reisduur</center></center></th>
-                    <th><center>Huidige Reisduur</center></th>
-                    <th><center>Vertraging</center></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="route" items="${routes}">
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item active">
+                    <a class="nav-link active" data-toggle="tab" href="#summary" role="tab">Samenvatting</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#provider" role="tab">Per provider</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="summary" role="tabpanel">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Naam</th>
+                                <th>Afstand</th>
+                                <th>Normale Reisduur</th>
+                                <th>Huidige Reisduur</th>
+                                <th>Vertraging</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="routeSummaryEntry" items="${overview.summaries}">
+                                <tr>
+                                    <td>
+                                        ${routeSummaryEntry.route.id}
+                                    </td>
+                                    <td>
+                                        <a href="detail?id=${routeSummaryEntry.route.id}">
+                                            ${routeSummaryEntry.route.name}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.route.distance} m
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.route.defaultTravelTime}
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.averageCurrentTravelTime}
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.delay}
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="tab-pane" id="provider" role="tabpanel">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Naam</th>
+                                <th>Afstand</th>
+                                <th>Normale Reistijd</th>
+                                <th>Gem. Delay</th>
+                                <th colspan="2"><img class="resize" src="../images/tomtom.png"/></th> <!--temp-->
+                                <th colspan="2"><img class="resize" src="../images/waze.png"/></th> <!--temp-->
+                                <th colspan="2"><img class="resize" src="../images/gmaps.png"/></th> <!--temp-->
+                                <th colspan="2"><img class="resize" src="../images/here.png"/></th> <!--temp-->
+                                <th colspan="2"><img class="resize" src="../images/coyote.jpg"/></th> <!--temp-->
+                                <!--  <th>Normale Reisduur</th>
+                                  <th>Huidige Reisduur</th>
+                                  <th>Vertraging</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <td>
-                        <center>${route.id}</center>
-                        </td>
-                        <td>
-                            <a href="detail?id=${route.id}">
-                                <center>${route.name}</center>
-                            </a>
-                        </td>
-                        <td>
-                        <center>${route.distance} m</center>
-                        </td>
-                        <td>
-                        <center><img class="resize" src="../images/tomtom.png"/></center> <!-- route.provider -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center><!-- route.normalereisduur -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center><!-- route.huidigereisduur -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center><!-- route.vertraging -->
-                        </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    m
+                                </td>
+                                <td>
+                                <td>
+                                    %<!-- Gem. delay -->
+                                </td>
+                                <td>
+                                    HR <!-- tomtom -->
+                                </td>
+                                <td>
+                                    V <!-- tomtom -->
+                                </td>
+                                <td>
+                                    HR <!-- waze -->
+                                </td>
+                                <td>
+                                    V <!-- waze -->
+                                </td>
+                                <td>
+                                    HR <!-- gmaps -->
+                                </td>
+                                <td>
+                                    V <!-- gmaps -->
+                                </td>
+                                <td>
+                                    HR <!-- here -->
+                                </td>
+                                <td>
+                                    V <!-- here -->
+                                </td>
+                                <td>
+                                    HR <!-- coyote -->
+                                </td>
+                                <td>
+                                    V <!-- coyote -->
+                                </td>
+                                <td>
+                            </tr>
+                            <c:forEach var="routeSummaryEntry" items="${overview.summaries}">
+                                <tr>
+                                    <td>
+                                        ${routeSummaryEntry.route.id}
+                                    </td>
+                                    <td>
+                                        <a href="detail?id=${routeSummaryEntry.route.id}">
+                                            ${routeSummaryEntry.route.name}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.route.distance} m
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.averageCurrentTravelTime}
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.delay}
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getTravelTimeForProvider(0)} 
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getDelayForProvider(0)} 
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getTravelTimeForProvider(5)} 
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getDelayForProvider(5)} 
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getTravelTimeForProvider(2)} 
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getDelayForProvider(2)} 
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getTravelTimeForProvider(1)} 
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getDelayForProvider(1)} 
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getTravelTimeForProvider(3)} 
+                                    </td>
+                                    <td>
+                                        ${routeSummaryEntry.getDelayForProvider(3)}
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="container">
-            <h1>Traject Overzicht v2</h1>
 
-            <c:if test="${not empty routes}">
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><center>Id</center></th>
-                    <th><center>Naam</center></th>
-                    <th><center>Afstand</center></th>
-                    <th><center>Normale Reistijd</center></th>
-                    <th><center>Gem. Delay</center></th>
-                    <th colspan="2"><center><img class="resize" src="../images/tomtom.png"/></center></th> <!--temp-->
-                    <th colspan="2"><center><img class="resize" src="../images/waze.png"/></center></th> <!--temp-->
-                    <th colspan="2"><center><img class="resize" src="../images/gmaps.png"/></center></th> <!--temp-->
-                    <th colspan="2"><center><img class="resize" src="../images/here.png"/></center></th> <!--temp-->
-                    <th colspan="2"><center><img class="resize" src="../images/coyote.jpg"/></center></th> <!--temp-->
-                    <!--  <th><center>Normale Reisduur</center></center></th>
-                      <th><center>Huidige Reisduur</center></th>
-                      <th><center>Vertraging</center></th>-->
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                    <center></center>
-                    </td>
-                    <td>
-
-                    </td>
-                    <td>
-                    <center>m</center>
-                    </td>
-                    <td>
-                    <td>
-                    <center>%</center><!-- Gem. delay -->
-                    </td>
-                    <td>
-                    <center>HR</center> <!-- tomtom -->
-                    </td>
-                    <td>
-                    <center>V</center> <!-- tomtom -->
-                    </td>
-                    <td>
-                    <center>HR</center> <!-- waze -->
-                    </td>
-                    <td>
-                    <center>V</center> <!-- waze -->
-                    </td>
-                    <td>
-                    <center>HR</center> <!-- gmaps -->
-                    </td>
-                    <td>
-                    <center>V</center> <!-- gmaps -->
-                    </td>
-                    <td>
-                    <center>HR</center> <!-- here -->
-                    </td>
-                    <td>
-                    <center>V</center> <!-- here -->
-                    </td>
-                    <td>
-                    <center>HR</center> <!-- coyote -->
-                    </td>
-                    <td>
-                    <center>V</center> <!-- coyote -->
-                    </td>
-                    <td>
-
-
-                        </tr>
-                        <c:forEach var="route" items="${routes}">
-                        <tr>
-                            <td>
-                        <center>${route.id}</center>
-                        </td>
-                        <td>
-                            <a href="detail?id=${route.id}">
-                                <center>${route.name}</center>
-                            </a>
-                        </td>
-                        <td>
-                        <center>${route.distance} m</center>
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center><!-- waze -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center><!-- gmaps -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-                        <td>
-                        <center>T.B.D.</center> <!-- tomtom -->
-                        </td>
-
-
-
-
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
-        </div>
     </body>
 </html>

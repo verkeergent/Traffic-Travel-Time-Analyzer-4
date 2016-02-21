@@ -11,7 +11,10 @@ import be.ugent.verkeer4.verkeerdomain.data.composite.*;
 import be.ugent.verkeer4.verkeerweb.dataobjects.*;
 import be.ugent.verkeer4.verkeerweb.viewmodels.RouteDetails;
 import be.ugent.verkeer4.verkeerweb.viewmodels.RouteEdit;
+import be.ugent.verkeer4.verkeerweb.viewmodels.RouteOverview;
+import be.ugent.verkeer4.verkeerweb.viewmodels.RouteSummaryEntry;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,8 +40,25 @@ public class RouteController {
         List<RouteSummary> mostRecentRouteSummaries = routeService.getMostRecentRouteSummaries();
         // TODO maak van routes een map van route viewmodels en overloop alle summaries en lookup route in de map om de recente gegevens aan te vullen
 
+        RouteOverview overview = new RouteOverview();
+
+        Map<Integer, RouteSummaryEntry> entries = new HashMap<>();
+
+        for (Route r : lst) {
+            RouteSummaryEntry entry = new RouteSummaryEntry();
+            entry.setRoute(r);
+            overview.getSummaries().add(entry);
+            entries.put(r.getId(), entry);
+        }
+
+        for (RouteSummary sum : mostRecentRouteSummaries) {
+            Map<ProviderEnum, RouteSummary> summaryPerProvider = entries.get(sum.getRouteId()).getRecentSummaries();
+            summaryPerProvider.put(sum.getProvider(), sum);
+        }
+
         ModelAndView model = new ModelAndView("route/list");
-        model.addObject("routes", lst);
+
+        model.addObject("overview", overview);
 
         return model;
     }
@@ -105,7 +125,8 @@ public class RouteController {
     }
 
     @RequestMapping(value = "route/edit/{id}", method = RequestMethod.POST)
-    public ModelAndView edit(@Valid @ModelAttribute("routeEdit") RouteEdit route, BindingResult result) throws ClassNotFoundException {
+    public ModelAndView edit(@Valid
+            @ModelAttribute("routeEdit") RouteEdit route, BindingResult result) throws ClassNotFoundException {
 
         // validation, moet manueel aangezien geen hibernate-validators toegevoegd is
         if (route.getName() == null || route.getName().isEmpty()) {
@@ -122,7 +143,7 @@ public class RouteController {
         }
 
         double toLat = 0;
-        double toLng =0;
+        double toLng = 0;
         try {
             toLat = Double.parseDouble(route.getToLatLng().split(",")[0]);
             toLng = Double.parseDouble(route.getToLatLng().split(",")[1]);
@@ -138,22 +159,21 @@ public class RouteController {
 
             IRouteService routeService = new RouteService();
             Route r = routeService.getRoute(route.getId());
-            
+
             r.setName(route.getName());
-            
-            boolean updateWaypoints = r.getFromLatitude() != fromLat || r.getFromLongitude() !=  fromLng || r.getToLatitude() != toLat || r.getToLongitude() != toLng;
-            
+
+            boolean updateWaypoints = r.getFromLatitude() != fromLat || r.getFromLongitude() != fromLng || r.getToLatitude() != toLat || r.getToLongitude() != toLng;
+
             r.setFromAddress(route.getFromAddress());
             r.setToAddress(route.getToAddress());
             r.setFromLatitude(fromLat);
             r.setFromLongitude(fromLng);
-            
+
             r.setToLatitude(toLat);
             r.setToLongitude(toLng);
-            
+
             routeService.updateRoute(r, updateWaypoints);
-            
-            
+
             return new ModelAndView(
                     "redirect:/route/detail?id=" + r.getId());
         }
@@ -172,8 +192,9 @@ public class RouteController {
         mr.setId(r.getId());
 
         List<RouteSummary> summaries = routeService.getMostRecentRouteSummariesForRoute(id);
-        double trafficDelayPercentage = getTrafficDelayPercentage(r, summaries);
+        double trafficDelayPercentage = getTrafficDelayPercentage(r, summaries.stream().toArray(RouteSummary[]::new));
         mr.setTrafficDelayPercentage(trafficDelayPercentage);
+        
         data.getRoutes().add(mr);
 
         for (RouteWaypoint waypoint : waypoints) {
@@ -184,14 +205,14 @@ public class RouteController {
         return data;
     }
 
-    private double getTrafficDelayPercentage(Route r, List<RouteSummary> summaries) {
+    private double getTrafficDelayPercentage(Route r, RouteSummary[] summaries) {
         // TODO move to route service?
-        if (summaries.size() <= 0) {
+        if (summaries.length <= 0) {
             return 0;
         }
 
-        int totalTravelTime = summaries.stream().mapToInt(RouteSummary::getTravelTime).sum();
-        double avg = totalTravelTime / summaries.size();
+        int totalTravelTime = Arrays.stream(summaries).mapToInt(RouteSummary::getTravelTime).sum();
+        double avg = totalTravelTime / summaries.length;
 
         double percentage = (avg / r.getDefaultTravelTime()) - 1;
         return percentage;
@@ -231,7 +252,7 @@ public class RouteController {
                 routeSummaries = summariesPerRouteId.get(r.getId());
             }
 
-            double traficDelayPercentage = getTrafficDelayPercentage(r, routeSummaries);
+            double traficDelayPercentage = getTrafficDelayPercentage(r, routeSummaries.stream().toArray(RouteSummary[]::new));
             mr.setTrafficDelayPercentage(traficDelayPercentage);
 
             mapRoutesPerId.put(r.getId(), mr);
