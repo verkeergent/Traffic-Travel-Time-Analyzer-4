@@ -140,6 +140,19 @@ public class DbSet<T> {
         }
     }
 
+    public void deleteWhere(String condition, Map<String, Object> parameters) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+
+            Query q = con.createQuery("DELETE FROM " + getTableName() + " WHERE " + condition);
+
+            for (Entry<String, Object> parameter : parameters.entrySet()) {
+                q.addParameter(parameter.getKey(), parameter.getValue());
+            }
+
+            q.executeUpdate();
+        }
+    }
+
     protected String getPrimaryKey() {
         return "id";
     }

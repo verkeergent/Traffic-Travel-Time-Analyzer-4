@@ -29,7 +29,7 @@ class UpdateTrajectenFromTomTomData {
                     r.setDistance(tomtomRoute.getSummary().getLengthInMeters());
                     r.setDefaultTravelTime(tomtomRoute.getSummary().getTravelTimeInSeconds());
 
-                    routes.updateRoute(r);
+                    routes.updateRoute(r, false);
                     
                     int idx = 0;
                     for (Leg leg : tomtomRoute.getLegs()) {

@@ -13,7 +13,7 @@ public interface IRouteService {
     
     public void insertRouteWaypoint(RouteWaypoint wp);
 
-    public void updateRoute(Route r);
+    public void updateRoute(Route r, boolean updateWaypoints);
 
     public List<RouteWaypoint> getRouteWaypoints();
     
