@@ -63,7 +63,8 @@ public class RouteController {
             double delayPercentage = getTrafficDelayPercentage(r, summaryPerProvider.values().stream().toArray(RouteSummary[]::new));
             double currentTravelTime = r.getDefaultTravelTime() * (1 + delayPercentage);
             double delay = currentTravelTime - r.getDefaultTravelTime();
-            
+            if(delay < 0)
+                delay = 0;
             entry.setDelay(delay);
             entry.setAverageCurrentTravelTime(currentTravelTime);
         }

@@ -62,6 +62,10 @@
                                     <td>
                                         ${routeSummaryEntry.delay}
                                     </td>
+                                    <td>
+                                        <a href="<c:url value="/route/edit/${routeSummaryEntry.route.id}"/>"><span class="btn icon-pencil">Wijzig</span></a>
+                                    </td>
+                                    
                                 </tr>
                             </c:forEach>
                         </tbody>
