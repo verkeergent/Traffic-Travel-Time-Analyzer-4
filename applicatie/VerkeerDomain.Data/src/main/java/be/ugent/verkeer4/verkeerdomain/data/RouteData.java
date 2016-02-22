@@ -8,6 +8,9 @@ public class RouteData {
     private int routeId;
     private ProviderEnum provider;
     private int travelTime;
+    private int delay;
+    private int distance;
+
     private Date timestamp;
 
     /**
@@ -78,6 +81,35 @@ public class RouteData {
      */
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public void setTotalDistance(int totalDistance) {
+        this.setDistance(getDistance());
+    }
+
+    /**
+     * @return the delay
+     */
+    public int getDelay() {
+        return delay;
+    }
+
+    /**
+     * @return the distance
+     */
+    public int getDistance() {
+        return distance;
+    }
+
+    /**
+     * @param distance the distance to set
+     */
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
 }

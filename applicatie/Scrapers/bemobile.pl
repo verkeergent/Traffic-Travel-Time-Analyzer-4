@@ -8,8 +8,17 @@ my $toLng = @ARGV[3]; #"3.736953";
 
 my $params = '{"FR":{"COORD":{"LA":' . $fromLat .',"LO":' . $fromLng . '},"TD":""},"M":["car"],"ST":"\/Date(' . time . '+0200)\/","EC":"","O":"","RC":"","TO":{"COORD":{"LA":' . $toLat . ',"LO":' . $toLng . '},"TD":""}}';
 
-my $response = `curl -s -o - --header "Content-Type: application/json" --data '$params' 'http://touring.api.be-mobile.be/service/TravelTimes/Personal3'`;
 
+my $exec;
+if($^O eq 'MSWin32') {
+	$exec = 'echo ' . $params . ' | curl --insecure -s -o - --header "Content-Type: application/json" -d @- "http://touring.api.be-mobile.be/service/TravelTimes/Personal3"';
+}
+else {
+	$exec = 'curl -s -o - --header "Content-Type: application/json" --data \'' . $params . '\' "http://touring.api.be-mobile.be/service/TravelTimes/Personal3"';
+}
+
+my $response = `$exec`;
+#print $response;
 my $distance;
 my $baseTime;
 my $delay;

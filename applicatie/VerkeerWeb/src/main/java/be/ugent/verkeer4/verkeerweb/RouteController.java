@@ -19,11 +19,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import javax.enterprise.inject.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -204,6 +202,7 @@ public class RouteController {
         mr.setDistance(r.getDistance());
         mr.setId(r.getId());
 
+        // TODO delay berekenen op delay kolom in routedata
         List<RouteSummary> summaries = routeService.getMostRecentRouteSummariesForRoute(id);
         double trafficDelayPercentage = getTrafficDelayPercentage(r, summaries.stream().toArray(RouteSummary[]::new));
         mr.setTrafficDelayPercentage(trafficDelayPercentage);

@@ -66,7 +66,7 @@ public class TomTomClientTest {
         
     }
     
-    @Test
+  /*  @Test
     public void testTomtomScrape() {
         TomTomProvider provider = new TomTomProvider();
         
@@ -76,5 +76,5 @@ public class TomTomClientTest {
         r.setToLatitude(51.056146);
         r.setToLongitude(3.695183);
         RouteData rd = provider.scrape(r);
-    }
+    }*/
 }

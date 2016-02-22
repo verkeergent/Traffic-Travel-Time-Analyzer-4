@@ -82,7 +82,7 @@ sub saveCache {
 sub getAppCodeAndId {
 	my $url = 'https://maps.here.com/directions/drive/N' . $fromLat . '-,-E' . $fromLng . ':' . $fromLat . ',' . $fromLng . '/N' . $toLat . '-,-E' . $toLng .':' . $toLat . ',' . $toLng .'?map=' . $toLat . ',' . $toLng . ',normal&avoid=carHOV';
 	
-	my $response = `curl -s -o - '$url'`;
+	my $response = `curl --insecure -s -o - "$url"`;
 	
 	#print "parsing api key\n";
 	# "appCode":"djPZyynKsbTjIUDOBcHZ2g","appId":"xWVIueSv6JL0aJ5xqTxb"
@@ -122,7 +122,7 @@ sub printRouteData {
 	
 	#print $url;
 	
-	my $response = `curl -s -o - '$url'`;
+	my $response = `curl --insecure -s -o - "$url"`;
 	
 	my $idx = index($response, "summary");
 	my $part = substr($response,$idx, 500);

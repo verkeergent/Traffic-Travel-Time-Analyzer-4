@@ -17,7 +17,7 @@ my $url = 'https://www.waze.com/row-RoutingManager/routingRequest?from=x%3A' . $
 #print $url;
 #print "\n";
 
-my $json = `curl -s -o - '$url'`;
+my $json = `curl --insecure -s -o - "$url"`;
 
 my $response =  from_json($json);
 
