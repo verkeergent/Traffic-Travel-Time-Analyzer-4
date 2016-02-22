@@ -70,8 +70,9 @@ sub saveAPIKey {
 
 
 sub getBootstrapScriptUrl {
-	my $url ='http://routes.tomtom.com/#/route/' . $fromLat . '%C2%B0N,%20' . $fromLng . '%C2%B0E@' . $fromLat . ',' . $fromLng . '@-1/' . $toLat . '%C2%B0N, ' . $toLng . '%C2%B0E@' . $toLat . ',' . $toLng . '@-1/?leave=now&traffic=false&zoom=12';
-	my $response = `curl -s -o - "$url"`;
+	my $url ='http://routes.tomtom.com/#/route/' . $fromLat . '°N, ' . $fromLng . '°E@' . $fromLat . ',' . $fromLng . '@-1/' . $toLat . '°N, ' . $toLng . '°E@' . $toLat . ',' . $toLng . '@-1/?leave=now&traffic=false&zoom=12';
+	my $response = `curl -s -o - '$url'`;
+
 
 	if($response =~ /.*"(.*Bootstrap\.js.*?)".*/gc) {
 		#print "Bootstrapscript at $1\n";
@@ -82,8 +83,7 @@ sub getBootstrapScriptUrl {
 
 sub getAPIKey {
 	(my $bootstrapUrl) = @_;
-	
-	my $response = `curl -s -o - "$bootstrapUrl"`;
+	my $response = `curl -s -o - '$bootstrapUrl'`;
 	
 	#print "parsing api key\n";
 	# apikey:'dvbfcb88hkrje9ur2fs84uxn'
@@ -92,7 +92,7 @@ sub getAPIKey {
 	#print $response;
 	my $idx = index($response, "apikey:");
 	my $part = substr($response,$idx, 200);
-	#print $response;
+	
 	#print $part;
 	if($part =~ /.*apikey\:\s*'(.*?)'.*/gc) {
 		return $1;
@@ -111,7 +111,7 @@ sub printRouteData {
 	
 	#print $url;
 	
-	my $response = `curl -s -o - "$url"`;
+	my $response = `curl -s -o - '$url'`;
 	
 	#print $response;
 	if($response =~ /.*?"summary"\s*\:\s*\{(.*?)"instructions"/gc) {
