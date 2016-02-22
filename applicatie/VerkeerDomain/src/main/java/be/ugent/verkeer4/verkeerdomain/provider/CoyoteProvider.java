@@ -1,5 +1,6 @@
 package be.ugent.verkeer4.verkeerdomain.provider;
 
+import be.ugent.verkeer4.verkeerdomain.IRouteService;
 import be.ugent.verkeer4.verkeerdomain.Settings;
 import be.ugent.verkeer4.verkeerdomain.data.ProviderEnum;
 import be.ugent.verkeer4.verkeerdomain.data.Route;
@@ -11,14 +12,21 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CoyoteProvider implements ISummaryProvider {
 
-    public CoyoteProvider() {
+    private IRouteService routeService;
 
+    public CoyoteProvider(IRouteService routeService) {
+        this.routeService = routeService;
     }
 
     protected List<RouteData> scrape() throws InterruptedException, IOException, Exception {
+
+        Map<String, Route> routeByLowerCaseName = routeService.getRoutes().stream().collect(Collectors.toMap(r -> r.getName().toLowerCase(), r -> r));
+
         File baseDir = new File(Settings.getInstance().getScrapePath());
 
         File script = new File(baseDir, "coyote.pl");
@@ -34,9 +42,9 @@ public class CoyoteProvider implements ISummaryProvider {
 
             String headers = reader.readLine();
             String line;
-            
+
             List<RouteData> lst = new ArrayList<>();
-            
+
             while ((line = reader.readLine()) != null) {
 
                 String[] parts = line.split(";");
@@ -45,9 +53,11 @@ public class CoyoteProvider implements ISummaryProvider {
                 int totalTimeSeconds = Integer.parseInt(parts[1]);
                 int totalDelaySeconds = Integer.parseInt(parts[2]);
                 String name = parts[3];
-
-                Route r = getRouteByCoyoteName(name);
-                if (r != null) {
+                String[] nameParts = name.split(" - "); // TODO controleren of juist
+                
+                if(routeByLowerCaseName.containsKey(nameParts[0].toLowerCase())) {
+                    Route r = routeByLowerCaseName.get(nameParts[0].toLowerCase());
+                
                     RouteData rd = new RouteData();
                     rd.setProvider(ProviderEnum.Coyote);
                     rd.setTimestamp(new Date());
@@ -58,15 +68,11 @@ public class CoyoteProvider implements ISummaryProvider {
                     lst.add(rd);
                 }
             }
-            
+
             return lst;
         }
 
         return null;
-    }
-
-    private Route getRouteByCoyoteName(String name) {
-        return null; // TODO!
     }
 
     @Override

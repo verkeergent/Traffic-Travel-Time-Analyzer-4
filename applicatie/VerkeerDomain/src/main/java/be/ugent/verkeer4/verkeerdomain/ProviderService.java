@@ -30,7 +30,7 @@ public class ProviderService extends BaseService implements IProviderService {
         perRouteProviders.add(new WazeProvider());
 
         this.summaryProviders = new ArrayList<>();
-        summaryProviders.add(new CoyoteProvider());
+        summaryProviders.add(new CoyoteProvider(routeService));
     }
 
     @Override
