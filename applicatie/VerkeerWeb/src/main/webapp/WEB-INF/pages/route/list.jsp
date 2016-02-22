@@ -100,6 +100,7 @@
                                     m
                                 </td>
                                 <td>
+                                    sec
                                 <td>
                                     %<!-- Gem. delay -->
                                 </td>

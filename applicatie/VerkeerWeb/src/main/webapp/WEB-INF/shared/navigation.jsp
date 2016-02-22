@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../">Home</a>
+            <a class="navbar-brand" href="<c:url value="/" />">Home</a>
         </div>
         
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,11 +29,11 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown active dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Info <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="../info/providers">Providers</a></li>
-                        <li><a href="../info/tos">TOS</a></li>
-                        <li><a href="../info/about">About</a></li>
+                        <li><a href="<c:url value="/info/providers" />">Providers</a></li>
+                        <li><a href="<c:url value="/info/tos" />">TOS</a></li>
+                        <li><a href="<c:url value="/info/about" />">About</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="../info/contact">Contact</a></li>
+                        <li><a href="<c:url value="/info/contact" />">Contact</a></li>
                     </ul>
                 </li>
             </ul>

@@ -12,6 +12,7 @@
         <script src="<c:url value="/static/scripts/route/edit.js" />"></script>
     </head>
     <body>
+        <jsp:include page="/WEB-INF/shared/navigation.jsp" />
         <div class="container">
             <h1>Traject wijzigen</h1>
 
