@@ -12,6 +12,11 @@ import be.ugent.verkeer4.verkeerdomain.provider.WazeProvider;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProviderService extends BaseService implements IProviderService {
 
@@ -32,22 +37,59 @@ public class ProviderService extends BaseService implements IProviderService {
         summaryProviders.add(new CoyoteProvider(routeService));
     }
 
+    private synchronized void saveRouteData(RouteData data) {
+        if (data != null) {
+            repo.getRouteDataSet().insert(data);
+            
+            Logger.getLogger(ProviderService.class.getName()).log(Level.INFO, "Saving new route data for route " + data.getRouteId() + " and provider " + data.getProvider());
+        }
+    }
+
     @Override
     public void poll() throws ClassNotFoundException {
-        for (Route route : routeService.getRoutes()) {
-            for (IProvider provider : perRouteProviders) {
-                RouteData data = provider.poll(route);
-                if (data != null) {
-                    repo.getRouteDataSet().insert(data);
-                }
-            }
-        }
 
-        for (ISummaryProvider provider : summaryProviders) {
-            List<RouteData> lst = provider.poll();
-            if (lst != null) {
-                for (RouteData rd : lst) {
-                    repo.getRouteDataSet().insert(rd);
+        ExecutorService pool = Executors.newFixedThreadPool(10);
+
+        pool.submit(() -> {
+            for (ISummaryProvider provider : summaryProviders) {
+                List<RouteData> lst = provider.poll();
+                if (lst != null) {
+                    for (RouteData rd : lst) {
+                        saveRouteData(rd);
+                    }
+                }
+                else 
+                    Logger.getLogger(ProviderService.class.getName()).log(Level.WARNING, "Could not fetch summary for provider " + provider.getClass().getName());
+            }
+        });
+
+        for (Route route : routeService.getRoutes()) {
+            
+            long curTime = new Date().getTime();
+            for (IProvider prov : perRouteProviders) {
+                pool.submit(() -> {
+                    IProvider provider = prov;
+                    RouteData data = provider.poll(route);
+                    if(data != null)
+                        saveRouteData(data);
+                    else 
+                        Logger.getLogger(ProviderService.class.getName()).log(Level.WARNING, "Could not fetch route for provider " + provider.getClass().getName() + " for route " + route.getId() + " - " + route.getName());
+                });
+            }
+
+            
+            try {
+                pool.awaitTermination(30, TimeUnit.SECONDS);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ProviderService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            long diff = new Date().getTime() - curTime;
+            if(diff > 0 && diff < 5000) {
+                try {
+                    Thread.sleep(diff);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ProviderService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
