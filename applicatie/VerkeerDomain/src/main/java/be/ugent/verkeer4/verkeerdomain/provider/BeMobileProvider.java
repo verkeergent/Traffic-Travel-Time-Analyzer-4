@@ -17,7 +17,7 @@ public class BeMobileProvider extends BaseProvider implements IProvider {
         try {
             return scrape(route, "bemobile.pl");
         } catch (Exception ex) {
-            Logger.getLogger(TomTomProvider.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TomTomProvider.class.getName()).log(Level.SEVERE, "Scraping failed for route " + route.getId(), ex);
 
             return null;
         }

@@ -21,7 +21,7 @@ public class HereMapsProvider extends BaseProvider implements IProvider {
         try {
             return scrape(route, "here.pl");
         } catch (Exception ex) {
-            Logger.getLogger(HereMapsProvider.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HereMapsProvider.class.getName()).log(Level.SEVERE, "Scraping failed for route " + route.getId() + ", falling back to API", ex);
 
             return useAPI(route);
         }

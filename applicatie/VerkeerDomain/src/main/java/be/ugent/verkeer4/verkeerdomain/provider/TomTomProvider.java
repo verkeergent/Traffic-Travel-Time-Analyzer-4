@@ -22,7 +22,7 @@ public class TomTomProvider extends BaseProvider implements IProvider {
         try {
             return scrape(route, "tomtom.pl");
         } catch (Exception ex) {
-            Logger.getLogger(TomTomProvider.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TomTomProvider.class.getName()).log(Level.SEVERE, "Scraping failed for route " + route.getId() + ", falling back to API", ex);
 
             return useAPI(route);
         }
