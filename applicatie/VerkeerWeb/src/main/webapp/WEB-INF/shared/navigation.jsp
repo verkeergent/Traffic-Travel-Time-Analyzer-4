@@ -19,12 +19,6 @@
                 <li><a href="<c:url value="/route/list" />">Traject Overzicht <span class="sr-only">(current)</span></a></li>
                 <li><a href="<c:url value="/route/map" />">Traject Map</a></li>
             </ul>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Traject">
-                </div>
-                <button type="submit" class="btn btn-default">Filter</button>
-            </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown active dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Info <span class="caret"></span></a>
