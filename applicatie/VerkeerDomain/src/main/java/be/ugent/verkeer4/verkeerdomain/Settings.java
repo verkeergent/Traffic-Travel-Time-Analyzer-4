@@ -53,5 +53,15 @@ public class Settings {
         return conf.getBoolean("general.inProduction");
     }
 
+    public String getHereRoutingAPPId() {
+        Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+        return conf.getString("APIKeys.Here.AppId");
+    }
+
+    public String getHereRoutingAPPCode() {
+        Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+        return conf.getString("APIKeys.Here.AppCode");
+    }
+
     
 }
