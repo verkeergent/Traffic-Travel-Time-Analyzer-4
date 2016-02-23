@@ -9,7 +9,7 @@ import org.sql2o.Sql2o;
 
 public class DbSet<T> {
 
-    private final Sql2o sql2o;
+    protected final Sql2o sql2o;
     private final Class<T> type;
 
     private final String insertQuery;
@@ -135,6 +135,19 @@ public class DbSet<T> {
 
             Query q = con.createQuery("DELETE FROM " + getTableName() + " WHERE " + getPrimaryKey() + "=:" + getPrimaryKey())
                     .addParameter(getPrimaryKey(), key);
+
+            q.executeUpdate();
+        }
+    }
+
+    public void deleteWhere(String condition, Map<String, Object> parameters) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+
+            Query q = con.createQuery("DELETE FROM " + getTableName() + " WHERE " + condition);
+
+            for (Entry<String, Object> parameter : parameters.entrySet()) {
+                q.addParameter(parameter.getKey(), parameter.getValue());
+            }
 
             q.executeUpdate();
         }

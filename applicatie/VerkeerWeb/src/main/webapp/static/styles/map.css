@@ -6,3 +6,7 @@
 .leaflet-google-layer {
     z-index: 1 !important;
 }
+
+.pathHidden {
+    display:none;
+}

@@ -9,6 +9,7 @@ public interface IProvider {
     /***
      * 
      * @param route
+     * @return 
      */
-    public RouteData Poll(Route route);
+    public RouteData poll(Route route);
 }
