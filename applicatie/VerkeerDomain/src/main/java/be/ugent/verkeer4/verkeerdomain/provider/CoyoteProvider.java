@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class CoyoteProvider implements ISummaryProvider {
@@ -67,6 +69,9 @@ public class CoyoteProvider implements ISummaryProvider {
                     rd.setRouteId(r.getId());
                     lst.add(rd);
                 }
+                else {
+                    Logger.getLogger(CoyoteProvider.class.getName()).log(Level.WARNING, "''{0}'' IS NOT FOUND IN THE ROUTE LIST", nameParts[0]);
+                }
             }
 
             return lst;
@@ -77,7 +82,15 @@ public class CoyoteProvider implements ISummaryProvider {
 
     @Override
     public List<RouteData> poll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return scrape();
+        } catch (IOException ex) {
+            Logger.getLogger(CoyoteProvider.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (Exception ex) {
+            Logger.getLogger(CoyoteProvider.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
 }

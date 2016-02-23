@@ -17,3 +17,5 @@ perl waze.pl $fromLat $fromLng $toLat $toLng
 echo "Be-mobile:"
 perl bemobile.pl $fromLat $fromLng $toLat $toLng
 
+echo "Coyote:"
+perl coyote.pl
