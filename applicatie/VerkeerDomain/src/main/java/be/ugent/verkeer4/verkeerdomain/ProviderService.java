@@ -8,6 +8,7 @@ import be.ugent.verkeer4.verkeerdomain.provider.HereMapsProvider;
 import be.ugent.verkeer4.verkeerdomain.provider.IProvider;
 import be.ugent.verkeer4.verkeerdomain.provider.ISummaryProvider;
 import be.ugent.verkeer4.verkeerdomain.provider.TomTomProvider;
+import be.ugent.verkeer4.verkeerdomain.provider.ViaMichelinProvider;
 import be.ugent.verkeer4.verkeerdomain.provider.WazeProvider;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +37,7 @@ public class ProviderService extends BaseService implements IProviderService {
         perRouteProviders.add(new BeMobileProvider());
         perRouteProviders.add(new HereMapsProvider());
         perRouteProviders.add(new WazeProvider());
+        perRouteProviders.add(new ViaMichelinProvider());
 
         this.summaryProviders = new ArrayList<>();
         summaryProviders.add(new CoyoteProvider(routeService));
@@ -49,8 +51,7 @@ public class ProviderService extends BaseService implements IProviderService {
     @Override
     public void poll() throws ClassNotFoundException {
 
-        ExecutorService pool = Executors.newFixedThreadPool(10);
-        ExecutorCompletionService ecs = new ExecutorCompletionService(pool);
+        ExecutorService pool = Executors.newFixedThreadPool(6);
 
         List<Future> futures = new ArrayList<>();
         futures.add(pool.submit(() -> {

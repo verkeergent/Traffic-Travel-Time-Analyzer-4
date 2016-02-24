@@ -8,7 +8,9 @@ public enum ProviderEnum {
     GoogleMaps(2),
     Coyote(3),
     BeMobile(4),
-    Waze(5);
+    Waze(5),
+    Bing(6),
+    ViaMichelin(7);
     
     private final int _value;
 
