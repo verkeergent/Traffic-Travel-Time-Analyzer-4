@@ -19,13 +19,16 @@ public class HereMapsProvider extends BaseProvider implements IProvider {
     public RouteData poll(Route route) {
 
         try {
-            return scrape(route, "here.pl");
+            RouteData result =  scrape(route, "here.pl");
+            if(result == null)
+                return useAPI(route);
+            else
+                return result;
         } catch (Exception ex) {
-            Logger.getLogger(HereMapsProvider.class.getName()).log(Level.SEVERE, "Scraping failed for route " + route.getId() + ", falling back to API", ex);
+            Logger.getLogger(HereMapsProvider.class.getName()).log(Level.WARNING, "Scraping failed for route " + route.getId() + ", falling back to API", ex);
 
             return useAPI(route);
         }
-
     }
 
     public RouteData useAPI(Route route) {

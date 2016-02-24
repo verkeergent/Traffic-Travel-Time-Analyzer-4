@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
 
@@ -103,27 +105,32 @@ public class DbSet<T> {
     public int insert(T object) {
         try (org.sql2o.Connection con = sql2o.open()) {
 
-            Query q = con.createQuery(insertQuery)
-                    .bind(object);
+            //Logger.getLogger(DbSet.class.getName()).log(Level.INFO, "Executing query " + insertQuery);
+            Query q = con.createQuery(insertQuery);
+
+            for (Field field : this.type.getDeclaredFields()) {
+                if (!field.getName().equalsIgnoreCase(getPrimaryKey())) {
+                    field.setAccessible(true);
+                    q.addParameter(field.getName(), field.get(object));
+                }
+            }
+
             Object key = q.executeUpdate().getKey();
             return (int) (long) key;
+        } catch (Exception ex) {
+            Logger.getLogger(DbSet.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
         }
     }
 
     public void update(T object) throws Exception {
         try (org.sql2o.Connection con = sql2o.open()) {
 
-            Query q = con.createQuery(updateQuery)
-                    .bind(object);
+            Query q = con.createQuery(updateQuery);
 
-            if (getPrimaryKey().equalsIgnoreCase("id")) { // sql2o bind methode voegt geen 'id' toe
-                try {
-                    Field f = this.type.getDeclaredField(getPrimaryKey());
-                    f.setAccessible(true);
-                    q.addParameter(getPrimaryKey(), f.get(object));
-                } catch (NoSuchFieldException | SecurityException ex) {
-                    throw new Exception("Primary key field is niet gevonden op het object");
-                }
+            for (Field field : this.type.getDeclaredFields()) {
+                    field.setAccessible(true);
+                    q.addParameter(field.getName(), field.get(object));
             }
 
             q.executeUpdate();

@@ -1,5 +1,6 @@
 package be.ugent.verkeer4.verkeerdomain.provider;
 
+import be.ugent.verkeer4.verkeerdomain.ProviderService;
 import be.ugent.verkeer4.verkeerdomain.Settings;
 import be.ugent.verkeer4.verkeerdomain.data.ProviderEnum;
 import be.ugent.verkeer4.verkeerdomain.data.Route;
@@ -9,10 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class BaseProvider {
 
-    private ProviderEnum provider;
+    private final ProviderEnum provider;
 
     public BaseProvider(ProviderEnum provider) {
         this.provider = provider;
@@ -24,7 +27,7 @@ public abstract class BaseProvider {
 
         File script = new File(baseDir, scriptName);
 
-        ProcessBuilder pb = new ProcessBuilder("perl", script.toPath().toString(), route.getFromLatitude() + "", route.getFromLongitude() + "",
+        ProcessBuilder pb = new ProcessBuilder(Settings.getInstance().getPerlPath(), script.toPath().toString(), route.getFromLatitude() + "", route.getFromLongitude() + "",
                 route.getToLatitude() + "", route.getToLongitude() + "");
 
         pb.directory(baseDir);
@@ -40,8 +43,14 @@ public abstract class BaseProvider {
     }
 
     protected RouteData parseScrapeOutput(BufferedReader reader, Route route) throws IOException, Exception, NumberFormatException {
+        Logger.getLogger(BaseProvider.class.getName()).log(Level.INFO, "Reading header from scrape result");
         String headers = reader.readLine();
+        
+        Logger.getLogger(BaseProvider.class.getName()).log(Level.INFO, "Header line is " + headers);
+        Logger.getLogger(BaseProvider.class.getName()).log(Level.INFO, "Reading result line from scrape result");
         String results = reader.readLine();
+        
+        Logger.getLogger(BaseProvider.class.getName()).log(Level.INFO, "Result line is " + results);
         
         if (results.equalsIgnoreCase("")) {
             throw new Exception("Invalid scrape data");
@@ -63,7 +72,7 @@ public abstract class BaseProvider {
         rd.setTimestamp(new Date());
         rd.setTravelTime(totalTimeSeconds);
         rd.setDelay(delay);
-        rd.setTotalDistance(totalDistance);
+        rd.setDistance(totalDistance);
         rd.setRouteId(route.getId());
         return rd;
     }

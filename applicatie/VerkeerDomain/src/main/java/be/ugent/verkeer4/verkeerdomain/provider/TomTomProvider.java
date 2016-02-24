@@ -15,18 +15,22 @@ public class TomTomProvider extends BaseProvider implements IProvider {
     public TomTomProvider() {
         super(ProviderEnum.TomTom);
     }
-    
+
     @Override
     public RouteData poll(Route route) {
 
         try {
-            return scrape(route, "tomtom.pl");
+            RouteData result = scrape(route, "tomtom.pl");
+            if (result == null) {
+                return useAPI(route);
+            } else {
+                return result;
+            }
         } catch (Exception ex) {
-            Logger.getLogger(TomTomProvider.class.getName()).log(Level.SEVERE, "Scraping failed for route " + route.getId() + ", falling back to API", ex);
+            Logger.getLogger(TomTomProvider.class.getName()).log(Level.WARNING, "Scraping failed for route " + route.getId() + ", falling back to API", ex);
 
             return useAPI(route);
         }
-
     }
 
     private RouteData useAPI(Route route) {
@@ -51,5 +55,5 @@ public class TomTomProvider extends BaseProvider implements IProvider {
             return null;
         }
     }
-   
+
 }

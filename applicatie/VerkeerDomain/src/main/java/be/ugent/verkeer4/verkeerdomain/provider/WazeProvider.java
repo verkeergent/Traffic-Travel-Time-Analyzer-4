@@ -17,7 +17,7 @@ public class WazeProvider extends BaseProvider implements IProvider {
         try {
             return scrape(route, "waze.pl");
         } catch (Exception ex) {
-            Logger.getLogger(WazeProvider.class.getName()).log(Level.SEVERE, "Scraping failed for route " + route.getId(), ex);
+            Logger.getLogger(WazeProvider.class.getName()).log(Level.WARNING, "Scraping failed for route " + route.getId(), ex);
 
             return null;
         }

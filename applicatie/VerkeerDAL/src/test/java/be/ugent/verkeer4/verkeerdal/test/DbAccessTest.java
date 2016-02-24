@@ -2,13 +2,17 @@ package be.ugent.verkeer4.verkeerdal.test;
 
 import be.ugent.verkeer4.verkeerdal.IUnitOfWork;
 import be.ugent.verkeer4.verkeerdal.UnitOfWork;
+import be.ugent.verkeer4.verkeerdomain.data.ProviderEnum;
 import be.ugent.verkeer4.verkeerdomain.data.Route;
+import be.ugent.verkeer4.verkeerdomain.data.RouteData;
+import java.util.Date;
 import java.util.List;
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class DbAccessTest extends TestCase {
 
@@ -28,7 +32,7 @@ public class DbAccessTest extends TestCase {
     @Before
     @Override
     public void setUp() throws ClassNotFoundException {
-        repo = new UnitOfWork("//localhost:3306/verkeertest", "root", "");
+        repo = new UnitOfWork("//localhost:3306/verkeer", "root", "");
     }
 
     @After
@@ -36,6 +40,25 @@ public class DbAccessTest extends TestCase {
     public void tearDown() {
     }
 
+    @Test
+    public void testInsertAndUpdateRouteData() throws Exception {
+        RouteData rd = new RouteData();
+        rd.setRouteId(11);
+        rd.setDelay(123);
+        rd.setTravelTime(1234);
+        rd.setProvider(ProviderEnum.Coyote);
+        rd.setDistance(5678);
+        rd.setTimestamp(new Date());
+        int newId = repo.getRouteDataSet().insert(rd);
+        rd.setId(newId);
+        
+        rd.setDelay(987);
+        rd.setProvider(ProviderEnum.HereMaps);
+        repo.getRouteDataSet().update(rd);
+        
+    }
+    
+    
     public void testGetRoutes() {
         try {
             List<Route> trajecten = repo.getRouteSet().getItems();

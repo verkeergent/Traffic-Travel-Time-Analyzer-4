@@ -48,6 +48,12 @@ public class Settings {
        return conf.getString("ScrapePath");
     }
     
+    public String getPerlPath() {
+        Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+       return conf.getString("PerlPath");
+    }
+    
+    
     public boolean inProduction() {
         Config conf = ConfigFactory.load(SETTINGS_CONFIG);
         return conf.getBoolean("general.inProduction");

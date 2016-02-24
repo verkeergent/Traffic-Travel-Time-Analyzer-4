@@ -55,7 +55,7 @@ public class CoyoteProvider implements ISummaryProvider {
                 int totalTimeSeconds = Integer.parseInt(parts[1]);
                 int totalDelaySeconds = Integer.parseInt(parts[2]);
                 String name = parts[3];
-                String[] nameParts = name.split(" - "); // TODO controleren of juist
+                String[] nameParts = name.split(" - ");
                 
                 if(routeByLowerCaseName.containsKey(nameParts[0].toLowerCase())) {
                     Route r = routeByLowerCaseName.get(nameParts[0].toLowerCase());
@@ -65,7 +65,7 @@ public class CoyoteProvider implements ISummaryProvider {
                     rd.setTimestamp(new Date());
                     rd.setTravelTime(totalTimeSeconds);
                     rd.setDelay(totalDelaySeconds);
-                    rd.setTotalDistance(totalDistance);
+                    rd.setDistance(totalDistance);
                     rd.setRouteId(r.getId());
                     lst.add(rd);
                 }
