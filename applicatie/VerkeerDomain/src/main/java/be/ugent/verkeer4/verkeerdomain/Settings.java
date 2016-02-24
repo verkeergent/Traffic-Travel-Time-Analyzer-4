@@ -33,16 +33,41 @@ public class Settings {
         String configName = inProduction() ? DB_PROD_CONFIG : DB_DEV_CONFIG;
         Config conf = ConfigFactory.load(configName);
         return conf.getString("database.user");
+        
     }
 
     public String getDatabasePassword() {
         String configName = inProduction() ? DB_PROD_CONFIG : DB_DEV_CONFIG;
         Config conf = ConfigFactory.load(configName);
         return conf.getString("database.password");
+
     }
 
+    public String getScrapePath() {
+        Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+       return conf.getString("ScrapePath");
+    }
+    
+    public String getPerlPath() {
+        Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+       return conf.getString("PerlPath");
+    }
+    
+    
     public boolean inProduction() {
         Config conf = ConfigFactory.load(SETTINGS_CONFIG);
         return conf.getBoolean("general.inProduction");
     }
+
+    public String getHereRoutingAPPId() {
+        Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+        return conf.getString("APIKeys.Here.AppId");
+    }
+
+    public String getHereRoutingAPPCode() {
+        Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+        return conf.getString("APIKeys.Here.AppCode");
+    }
+
+    
 }

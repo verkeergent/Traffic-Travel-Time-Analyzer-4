@@ -4,6 +4,7 @@ public class UnitOfWork extends BaseRepository implements IUnitOfWork {
 
     private RouteDbSet routes;
     private RouteDataDbSet routeDatas;
+    private RouteWaypointDbSet routeWaypoints;
 
     public UnitOfWork(String connectionString, String user, String password) throws ClassNotFoundException {
         super(connectionString, user, password);
@@ -13,6 +14,7 @@ public class UnitOfWork extends BaseRepository implements IUnitOfWork {
     protected void initializeSets() {
         this.routes = new RouteDbSet(sql2o);
         this.routeDatas = new RouteDataDbSet(sql2o);
+        this.routeWaypoints = new RouteWaypointDbSet(sql2o);
     }
 
     @Override
@@ -25,4 +27,10 @@ public class UnitOfWork extends BaseRepository implements IUnitOfWork {
         return this.routeDatas;
     }
 
+    @Override
+    public RouteWaypointDbSet getRouteWaypointSet() {
+        return this.routeWaypoints;
+    }
+
+    
 }

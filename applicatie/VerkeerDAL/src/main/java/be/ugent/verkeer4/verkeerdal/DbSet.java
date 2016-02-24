@@ -4,12 +4,14 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
 
 public class DbSet<T> {
 
-    private final Sql2o sql2o;
+    protected final Sql2o sql2o;
     private final Class<T> type;
 
     private final String insertQuery;
@@ -28,7 +30,7 @@ public class DbSet<T> {
         StringBuilder values = new StringBuilder();
         for (Field field : this.type.getDeclaredFields()) {
             if (!field.getName().equalsIgnoreCase(getPrimaryKey())) {
-                names.append(field.getName())
+                names.append("`").append(field.getName()).append("`")
                         .append(",");
                 values.append(":")
                         .append(field.getName())
@@ -45,7 +47,7 @@ public class DbSet<T> {
         for (Field field : this.type.getDeclaredFields()) {
             if (!field.getName().equalsIgnoreCase(getPrimaryKey())) {
 
-                values.append(field.getName())
+                values.append("`").append(field.getName()).append("`")
                         .append("=")
                         .append(":").append(field.getName())
                         .append(",");
@@ -103,27 +105,32 @@ public class DbSet<T> {
     public int insert(T object) {
         try (org.sql2o.Connection con = sql2o.open()) {
 
-            Query q = con.createQuery(insertQuery)
-                    .bind(object);
+            //Logger.getLogger(DbSet.class.getName()).log(Level.INFO, "Executing query " + insertQuery);
+            Query q = con.createQuery(insertQuery);
+
+            for (Field field : this.type.getDeclaredFields()) {
+                if (!field.getName().equalsIgnoreCase(getPrimaryKey())) {
+                    field.setAccessible(true);
+                    q.addParameter(field.getName(), field.get(object));
+                }
+            }
+
             Object key = q.executeUpdate().getKey();
             return (int) (long) key;
+        } catch (Exception ex) {
+            Logger.getLogger(DbSet.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
         }
     }
 
     public void update(T object) throws Exception {
         try (org.sql2o.Connection con = sql2o.open()) {
 
-            Query q = con.createQuery(updateQuery)
-                    .bind(object);
+            Query q = con.createQuery(updateQuery);
 
-            if (getPrimaryKey().equalsIgnoreCase("id")) { // sql2o bind methode voegt geen 'id' toe
-                try {
-                    Field f = this.type.getDeclaredField(getPrimaryKey());
-                    f.setAccessible(true);
-                    q.addParameter(getPrimaryKey(), f.get(object));
-                } catch (NoSuchFieldException | SecurityException ex) {
-                    throw new Exception("Primary key field is niet gevonden op het object");
-                }
+            for (Field field : this.type.getDeclaredFields()) {
+                    field.setAccessible(true);
+                    q.addParameter(field.getName(), field.get(object));
             }
 
             q.executeUpdate();
@@ -140,11 +147,24 @@ public class DbSet<T> {
         }
     }
 
+    public void deleteWhere(String condition, Map<String, Object> parameters) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+
+            Query q = con.createQuery("DELETE FROM " + getTableName() + " WHERE " + condition);
+
+            for (Entry<String, Object> parameter : parameters.entrySet()) {
+                q.addParameter(parameter.getKey(), parameter.getValue());
+            }
+
+            q.executeUpdate();
+        }
+    }
+
     protected String getPrimaryKey() {
         return "id";
     }
 
     protected String getTableName() {
-        return this.type.getSimpleName();
+        return this.type.getSimpleName().toLowerCase();
     }
 }

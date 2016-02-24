@@ -6,8 +6,11 @@ public class RouteData {
 
     private int id;
     private int routeId;
-    private ProviderEnum provider;
+    private int provider;
     private int travelTime;
+    private int delay;
+    private int distance;
+
     private Date timestamp;
 
     /**
@@ -42,14 +45,14 @@ public class RouteData {
      * @return the provider
      */
     public ProviderEnum getProvider() {
-        return provider;
+        return ProviderEnum.fromInt(provider);
     }
 
     /**
      * @param provider the provider to set
      */
     public void setProvider(ProviderEnum provider) {
-        this.provider = provider;
+        this.provider = provider.getValue();
     }
 
     /**
@@ -78,6 +81,31 @@ public class RouteData {
      */
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    /**
+     * @return the delay
+     */
+    public int getDelay() {
+        return delay;
+    }
+
+    /**
+     * @return the distance
+     */
+    public int getDistance() {
+        return distance;
+    }
+
+    /**
+     * @param distance the distance to set
+     */
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
 }
