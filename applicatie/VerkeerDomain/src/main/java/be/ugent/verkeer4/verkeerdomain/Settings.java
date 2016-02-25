@@ -69,5 +69,10 @@ public class Settings {
         return conf.getString("APIKeys.Here.AppCode");
     }
 
+    public String getGoogleRoutingAPPCode() {
+        Config conf = ConfigFactory.load(SETTINGS_CONFIG);
+        return conf.getString("APIKeys.Google.AppCode");
+    }
+
     
 }

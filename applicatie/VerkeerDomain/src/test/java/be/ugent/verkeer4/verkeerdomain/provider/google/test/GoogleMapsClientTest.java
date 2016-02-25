@@ -49,7 +49,7 @@ public class GoogleMapsClientTest {
         route.setFromLongitude(3.725996);
         route.setToLatitude(51.056146);
         route.setToLongitude(3.695183);
-        data = google.Poll(route);
+        data = google.poll(route);
         
         
         if(data.getTravelTime() == 0)
