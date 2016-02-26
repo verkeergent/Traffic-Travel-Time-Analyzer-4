@@ -14,6 +14,8 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -45,19 +47,14 @@ public class GoogleMapsClientTest {
         
         GoogleProvider google = new GoogleProvider();
         Route route = new Route();
-        route.setFromLatitude(51.038663);
-        route.setFromLongitude(3.725996);
-        route.setToLatitude(51.056146);
-        route.setToLongitude(3.695183);
+        route.setFromLatitude(51.0560905);
+        route.setFromLongitude(3.6951634);
+        route.setToLatitude(51.0663037);
+        route.setToLongitude(3.6996797);
+        
         data = google.poll(route);
         
-        
-        if(data.getTravelTime() == 0)
-        {
-            fail("Geen travel time");            
-        }
-        else
-            System.out.print(data.getTravelTime());
-        
+        System.out.print(data.getDistance());
+
     }
 }
