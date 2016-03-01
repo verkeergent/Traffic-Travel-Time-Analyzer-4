@@ -1,0 +1,4 @@
+PROJECT_URL: verkeer-4.vop.tiwi.be
+PROJECT_PROXY: tiwibp4.ugent.be
+PROJECT_SSHPORT: 10022
+ROOT_PASSWORD: c1vREMKL67
